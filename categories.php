@@ -1,3 +1,7 @@
+<?php
+    require_once ('Include/DB.php');
+?>
+
 <!DOCTYPE>
 <html>
     <head>
@@ -28,24 +32,16 @@
                 
                 </div>
                 <div class="col-sm-10">
-                     <h1>ADMIN PANEL</h1>
-                    <p>lorem blah lalglas sd dskn kjsdcjkds cs kjdsc  kjn cd sdkj ccdjdkjsd cs sd
-                    sdk sdnsck sdklmsc kjndclsmdjncskj dvn hjdjbhjbu sd jsd sinjsdms dj j c sbjc ismk si'sjhs
-                    sdjdskndvi kjnsdkndsm  dsjk dxknsddf
-                    dfdndfnsdodsonsdldmodsfoivd klmvdiosdsojnv dsondvndvonivsjnsdoidsf
-                    sdjisdnfoindvsndsdsiondsonoisvdnoiunoxznoidsnscosdv
-                    sdn no xiuiulce n  iolni uihjkn iun iujk inj iunjm ni in iuj ni oi nio nj
-                    kbn iunjk iuj iujiujiuj iuj iuj ibuj iunjm iujkm injm iunj iunj injm inj
-                    iuk onj ioujk oiujklm oiukm onjm oiujlkm ojilk oi oio jon ion jmoiu jou </p>
-                    <h1> HEADER </h1>
-                    <p>lorem blah lalglas sd dskn kjsdcjkds cs kjdsc  kjn cd sdkj ccdjdkjsd cs sd
-                    sdk sdnsck sdklmsc kjndclsmdjncskj dvn hjdjbhjbu sd jsd sinjsdms dj j c sbjc ismk si'sjhs
-                    sdjdskndvi kjnsdkndsm  dsjk dxknsddf
-                    dfdndfnsdodsonsdldmodsfoivd klmvdiosdsojnv dsondvndvonivsjnsdoidsf
-                    sdjisdnfoindvsndsdsiondsonoisvdnoiunoxznoidsnscosdv
-                    sdn no xiuiulce n  iolni uihjkn iun iujk inj iunjm ni in iuj ni oi nio nj
-                    kbn iunjk iuj iujiujiuj iuj iuj ibuj iunjm iujkm injm iunj iunj injm inj
-                    iuk onj ioujk oiujklm oiukm onjm oiujlkm ojilk oi oio jon ion jmoiu jou </p>
+                     <h1>Manage Catergories</h1>
+                     <form action="categories.php" method="post">
+                         <fieldset>
+                             <div class="form-group">
+                                 <label class="form-control" for="catergoryname"> name:</label>
+                             <input type="text" name="Catergory" id="catergoryname" placeholder="Enter new category">
+                             <input class="btn btn-dark" type="Submit"  name="Submit" value="Add new category">
+                             </div>
+                         </fieldset>
+                     </form>
                 </div>
             </div>
         </div>
