@@ -19,4 +19,29 @@ print_r($Email);
 
 //}
 ?>
+<?php
+    $conn = new mysqli($host, $username, $password, $dbname);
+$pname  = $_POST['pname'];
+
+$sname  = $_POST['sname'];
+
+$email  = $_POST['email'];
+$sql    = "insert into tablename (pname, sname, email) values (?, ?, ?)  ";
+
+$stmt   = $conn->prepare($sql);
+
+$stmt->bind_param('sss', $pname, $sname, $email);
+
+  if($stmt->execute()){
+
+     $result = 1;
+
+  }
+
+}
+
+echo $result;
+
+$conn->close();
+?>
 

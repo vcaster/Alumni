@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -16,7 +17,7 @@
 <!-- //font-awesome icons -->
 <!--Google Fonts-->
 <!-- <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet"> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
 <script>
 $(document).ready(function(){
      $(".Matric,.info,.infologin").hide();
@@ -25,24 +26,7 @@ $(document).ready(function(){
       
       $('#loader').hide();
       
-             	$('#email').keyup(function(){
-                      //$('#loader').show();
-                        //$("#loader_text").html("checking");
-                        
-                        //form = ($this);
-                        var name = $('#email').val();
-                         //var data = form.serialize();
-                        //alert(data);
-                        if($.trim(name) != ''){
-                            
-                            
-                            $.post("lookup.php", {sugesstion : name}, function (result){
-                            
-                                $('#loader','#loader_text').hide();
-                                $('#loader_text').html(result);
-    
-    
-                            });
+             	
 //				$.ajax({
 //					type:'POST',
 //					 url: "lookup.php",
@@ -67,48 +51,121 @@ $(document).ready(function(){
 
 //					}
 //				});
-                            }
-                        
-                    });
+//                            }
+//                        
+//                    });
 
     $(".btn1").click(function(){
         $(".btn1").hide(1000, function(){
             $(".btnlogin").hide(1000, function(){
             
             $(".info").show(1000, function(){
+                $('#Email').keyup(function(e){
+                    e.preventDefault();
+                      $('#loader').show();
+                        $("#loader_text").html("checking");
+                        
+                        //form = ($this);
+                        var name = $('#Email').val();
+                         //var data = form.serialize();
+                        //alert(data);
+                        var regemail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+                         if( name.match(regemail) ){
+                         if($.trim(name) != ''){
+                            
+                            
+                            $.post("lookup.php", {sugesstion : name}, function (results){
+                            
+                                $('#loader','#loader_text').hide();
+                                $('#loader_text').html(results);
+    
+    
+                            });
+                        }
+                                     
+        }
+        else {
+             $('#loader','#loader_text').hide();
+             $("#loader_text").html("invalid");
+        }
+        });
+        
+//                        if (regemail.test(name)) {
+//                        $('#loader','#loader_text').hide();
+//                            $("#loader_text").html("invalid");                                                       
+//                        }
+                                           
                 
                 $(".btn2").click(function(e){
                     e.preventDefault();
                     
+                    var surname = $('#Surname').val();
+                    var firstname= $('#Firstname').val();
+                    var middlename = $('#Middlename').val();
+                    var email = $('#Email').val();
+                    var address = $('#Address').val();
                     var matric = $('#matric_id').val();
+                    var password = $('#password').val();
                     
-                    var reg = /[0-9]{2}\/[0-9]{4}/;
-                    if (!reg.test($('#matric_id').val())) {
-                        alert('kindly enter correct matriculation number \n leave empty if you cannot remember.');
-                      $('#message').html("kindly enter matric");
-                     
-                     function viewNext(){
-                         $('#message1').html('<img src="images/Spinner.gif"  height="50" width="50" />');
-                    }
-                    viewNext();
-                       
-                     //if(matric == ''){
-//                        //alert('kindly enter matriculation number');
-//                         $('#message').html("kindly enter matric");
-//                        
-                    }else{
-                       alert(matric);            
+                    
+                    
+                     $.ajax({ 
+
+                    method: "POST",
+                    url: "submit.php",
+
+                    data: {"surname": surname, "firstname": firstname, "middlename":middlename, "email": email, "address": address, "matric": matric, "password":password}
+
+                   }).done(function( data ) { 
+                      var result = $.parseJSON(data); 
+
+                      var str = '';
+
+                      if(result == 1) {
+
+                        $(".info").hide(1000, function(){});
+                        $(".infologin").show(1000, function(){}); 
+                        str = 'Signup successfull.';
+                        
+
+                      }else{
+                        str = 'Data could not be saved. Please try again'; 
+                      }
+
+                    $("#message").html(str);
+
+                });
+
+                    
+//                    $('#matric_id').keyup(function(){
+//                    if (!reg.test(matric)) {
+////                        alert('kindly enter correct matriculation number \n leave empty if you cannot remember.');
+//                      $('#message').html("kindly enter correct matric number");
+//                     
+//                     function viewNext(){
+//                         $('#message1').html('<img src="images/Spinner.gif"  height="20" width="20" />');
+//                    }
+//                    viewNext();
+//                       
+//                     //if(matric == ''){
+////                        //alert('kindly enter matriculation number');
+////                         $('#message').html("kindly enter matric");
+////                        
+//                    }
+//                    });
+//                    else{
+//                       alert(matric);            
                   
-                $('#message').hide(1000, function(){
-                $(".Matric").hide(1000, function(){    
-                $(".btn2").hide(1000, function(){
-       
-      
-         });
-         });
-         });      
+////                $('#message').hide(1000, function(){
+////                $(".Matric").hide(1000, function(){    
+////                $(".btn2").hide(1000, function(){
+////       
+//      
+//         });
+//         });
+//         });      
          
-                    }
+//                    }
         });
                
         });
@@ -128,7 +185,11 @@ $(document).ready(function(){
                         }); 
                 });     
                     }); 
-    });
+                    
+//        $(".btn2").click(function(e){
+//            e.preventDefault();
+//    });
+    });     
 </script>  
 
 </head>
@@ -151,19 +212,21 @@ $(document).ready(function(){
                                         <div class="info">
                                         <h4>Register</h4>
 <!--					<p>Please fill all</p>-->
-					<form action="#" method="post">
-						<input type="text" name="Search" placeholder="Surname" required="">
-						<input type="text" name="Search" placeholder="First Name" required="">
-                                                <input type="text" name="Search" placeholder="Middle Name" required="">
-                                                <input type="email" name="email" id="email" placeholder="Email" required=""><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><i id="loader_text"></i>
-                                                <input type="email" name="Search" placeholder="Address" required="">
-                                                <input  type="text" name="Search" id="matric_id" placeholder="Matric No *OPTIONAL*" required="">
+					<form action="index.php" method="post">
+                                            <input type="text" name="Surname" placeholder="Surname" value="" id="Surname">
+                                            <input type="text" name="Firstname" placeholder="First Name" value="" id="Firstname">
+                                            <input type="text" name="Middlename" placeholder="Middle Name" value="" id="Middlename">
+                                            <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><i id="loader_text"></i>
+                                            <input type="email" name="Address" placeholder="Address" value="" id="Address" >
+                                                <input  type="text" name="Matric" id="matric_id" placeholder="Matric No *OPTIONAL*" value="" ><br>
                                                 <input class="chk1" type="radio" name="Search" value="Employed" ><span>Employed</span>
                                                 <input class="chk2" type="radio" name="Search" value="Employed" ><span>Self Employed</span>
-                                                <input class="chk3" type="radio" name="Search" value="Unemployed"><span>Unemployed</span>
+                                                <input class="chk3" type="radio" name="Search" value="Unemployed"><span>Unemployed</span><br><br>
+                                                <input type="password" name="password" placeholder="Create Your Password" value="" id="password">
+                                                <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
                                                 <div id="message1"></div>
                                                 <br>
-						<input class="btn2" type="submit" value="Sign Up">
+                                                <input class="btn2" type="Submit" name="SubmitReg" value="Sign Up">
 					</form>
                                         </div>
                                         <div class="infologin">
