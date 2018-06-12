@@ -3,13 +3,13 @@
 //$value = $_POST["sugesstion"];
 //echo $value;
 
-     $database = "crud";
+     $database = "alumni_cms";
      $Email = null;
                 $conn= mysqli_connect('localhost', 'root', '',$database);
                 if(isset($_POST['sugesstion'])){
                     
                     $Data = $_POST['sugesstion'];
-        $sql="SELECT email FROM alumni_records WHERE email='$Data'";
+        $sql="SELECT email FROM info WHERE email='$Data'";
 
         $Execute = mysqli_query($conn,$sql);
         

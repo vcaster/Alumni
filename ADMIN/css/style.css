@@ -272,6 +272,26 @@ a:hover {
 .logo-name  h1 a{
 	 color: #910048;
 }
+.logo-name h2 {
+    font-size: 2.5em;
+    color: #FC8213;
+    margin: 0em;
+    font-weight: 700;
+    text-decoration: none;
+}
+.logo-name  h2 a{
+	 color: #910048;
+}
+.logo-name h3 {
+    font-size: 2.5em;
+    color: #FC8213;
+    margin: 0em;
+    font-weight: 700;
+    text-decoration: none;
+}
+.logo-name  h3 a{
+	 color: #910048;
+}
 .logo-name a {
     display:inline-block;
 }
@@ -311,6 +331,37 @@ span.logo-clr{
 }
 .search-box input[type="submit"] {
     background: url(../images/search.png)no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+   vertical-align: text-top;
+    border: none;
+    outline: none;
+}
+.category-box {
+    float: left;
+    width:40%;
+    margin-top: 0.5em;
+	position: relative;
+    z-index: 1;
+    display: inline-block;
+    border:2px solid rgb(197, 197, 197);
+}
+.category-box input[type="text"] {
+    outline: none;
+    background: #fff;
+    width: 86%;
+    margin: 0;
+    z-index: 10;
+    font-size: 0.9em;
+    color: #7A7B78;
+    padding: 0.5em 0.5em;
+    border: none;
+    -webkit-appearance: none;
+    display: inline-block;
+}
+.category-box input[type="submit"] {
+    background: url(../images/add.png)no-repeat;
     width: 20px;
     height: 20px;
     display: inline-block;
@@ -1243,6 +1294,17 @@ span.malorum-pro {
   border: 8px solid transparent;
   border-top-color: #565656;
 }
+.bb {
+    float: right;
+}
+#heading{
+    font-family: Work-sans;
+    font-weight: bold;
+    color: #FC8213;
+}
+#heading:hover{
+  color: #000000;
+}
 .malorum-icons i {
   position: relative;
   top: 1px;
@@ -1680,6 +1742,11 @@ p.grid1 {
     padding: 1em 2em;
     margin: 2em 0em;
     box-shadow: -1px 0px 2px 1px rgba(0,0,0,0.15);
+}
+.description{
+    color: #868686;
+    font-weight:bold;
+    margin-top:-2px;
 }
 .typo-wells {
     background: #fff;
@@ -3145,6 +3212,9 @@ li.dropdown.head-dpdn a.dropdown-toggle {
 .search-box input[type="text"] {
     width: 85%;
 }
+.category-box input[type="text"] {
+    width: 85%;
+}
 .boost-icons-list ul li {
     font-size: 0.9em;
 }
@@ -3210,6 +3280,9 @@ canvas#pie {
 .search-box input[type="text"] {
     width: 83%;
 }
+.category-box input[type="text"] {
+    width: 83%;
+}
 }
 @media (max-width:1024px){
 .page-container {
@@ -3224,6 +3297,10 @@ canvas#pie {
     width: 37%;
 }
 .search-box {
+    float: left;
+    width: 55%;
+}
+.category-box {
     float: left;
     width: 55%;
 }
@@ -3478,11 +3555,17 @@ div#geoChart {
 .search-box {
     width: 60%;
 }
+.category-box {
+    width: 60%;
+}
 .logo-name h1 {
     font-size: 1.7em;
         margin-top: 0.3em;
 }
 .search-box input[type="text"] {
+    width: 80%;
+}
+.category-box input[type="text"] {
     width: 80%;
 }
 li.dropdown.head-dpdn a.dropdown-toggle {
@@ -3860,6 +3943,9 @@ canvas#pie {
 .search-box {
     margin-top: 0em;
 }
+.category-box {
+    margin-top: 0em;
+}
 .header-right {
     float: none;
     width: 100%;
@@ -3990,6 +4076,9 @@ canvas#line {
 .search-box input[type="text"] {
     width: 90%;
 }
+.category-box input[type="text"] {
+    width: 90%;
+}
 .mb40 {
     margin-bottom: 20px !important;
 }
@@ -4004,6 +4093,9 @@ canvas#bar {
 .search-box input[type="text"] {
     width: 88%;
 }
+.category-box input[type="text"] {
+    width: 88%;
+}
 canvas#line {
     width: 443px !important;
 }
@@ -4016,6 +4108,9 @@ canvas#bar {
     width: 409px !important;
 }
 .search-box input[type="text"] {
+    width: 88%;
+}
+.category-box input[type="text"] {
     width: 88%;
 }
 canvas#line {
@@ -4211,6 +4306,13 @@ canvas#line {
     background: url(../images/search.png)no-repeat 2px 2px;
     background-size: 15px;
 }
+.category-box input[type="text"] {
+    width: 85%;
+}
+.category-box input[type="submit"] {
+    background: url(../images/add.png)no-repeat 2px 2px;
+    background-size: 15px;
+}
 }
 @media (max-width:414px){
 .page-container {
@@ -4266,6 +4368,9 @@ canvas#bar {
     font-size: 0.8em;
 }
 .search-box input[type="text"] {
+    width: 82%;
+}
+.category-box input[type="text"] {
     width: 82%;
 }
 .profile_details ul li ul.dropdown-menu.drp-mnu {
@@ -4334,7 +4439,13 @@ li.dropdown.head-dpdn a.dropdown-toggle {
 .search-box {
     width: 50%;
 }
+.category-box {
+    width: 50%;
+}
 .search-box input[type="text"] {
+    width: 76%;
+}
+.category-box input[type="text"] {
     width: 76%;
 }
 .profile_details_left {
@@ -4347,6 +4458,10 @@ li.dropdown.head-dpdn a.dropdown-toggle {
     width: 84%;
 }
 .search-box {
+    width: 60%;
+    font-size: 0.8em;
+}
+.category-box {
     width: 60%;
     font-size: 0.8em;
 }
@@ -4407,6 +4522,11 @@ h3.tlt {
     font-size: 1em;
 }
 .search-box input[type="text"] {
+    width: 80%;
+    font-size: 0.95em;
+    padding: 0.5em 0.5em;
+}
+.category-box input[type="text"] {
     width: 80%;
     font-size: 0.95em;
     padding: 0.5em 0.5em;

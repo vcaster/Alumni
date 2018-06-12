@@ -9,9 +9,9 @@
         $address = $_POST['address'];
         $matric = $_POST['matric'];
         $password = $_POST['password'];
-        
+        $category = $_POST['category'];
                 
-        $sql = "INSERT INTO info(surname, firstname, middlename, email, address, matric, password) VALUES ('$surname','$firstname','$middlename','$email','$address','$matric', '$password')";
+        $sql = "INSERT INTO info(surname, firstname, middlename, email, address, matric, password, category) VALUES ('$surname','$firstname','$middlename','$email','$address','$matric', '$password', '$category')";
         
         $Execute = mysqli_query($conn,$sql);
         

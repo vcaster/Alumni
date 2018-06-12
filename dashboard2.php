@@ -14,14 +14,13 @@
     <title>TechnoGeeK | Dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap3.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap3.min.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
-     <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap3.min.css">
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/bootstrap3.min.js"></script>
+        
 
-    <link href="styledashboard.css" rel="stylesheet" type="text/css" >
+    <link href="css/styledashboard.css" rel="stylesheet" type="text/css" >
 
   
   </head>
@@ -150,7 +149,7 @@
 </div>
 <!--Latest User-->
 <div class="panel panel-default">
-  <div class="panel-heading"style="background-color:  #095f59;>
+  <div class="panel-heading"style="background-color:  #095f59;">
     <h3 class="panel-title">Latest Users</h3>
   </div>
   <div class="panel-body">
@@ -199,8 +198,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    
-    <script src="dist/js/bootstrap.min.js"></script>
+  <script src="js/bootstrap3.min.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
   </body>
 </html>

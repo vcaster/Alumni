@@ -25,6 +25,8 @@ $(document).ready(function(){
       
       
       $('#loader').hide();
+      $('#password_loader').hide();
+      
       
              	
 //				$.ajax({
@@ -89,7 +91,26 @@ $(document).ready(function(){
              $("#loader_text").html("invalid");
         }
         });
-        
+        $('#passwordcon').keyup(function(n){
+                    n.preventDefault();
+                    $('#password_loader').show();
+                    
+                    
+                    var pass1 = $('#password').val();
+                    var pass2 = $('#passwordcon').val();
+                    
+                    if(pass1 == pass2)
+                    {
+                        $('#password_loader').hide();
+                        $('#password_text').html('passwords match');
+                    }
+                    else{
+                        
+                        $("#password_text").html("passwords don\'t match");
+                    }
+                    
+                    
+        });
 //                        if (regemail.test(name)) {
 //                        $('#loader','#loader_text').hide();
 //                            $("#loader_text").html("invalid");                                                       
@@ -106,7 +127,7 @@ $(document).ready(function(){
                     var address = $('#Address').val();
                     var matric = $('#matric_id').val();
                     var password = $('#password').val();
-                    
+                    var category = 1;
                     
                     
                      $.ajax({ 
@@ -114,7 +135,7 @@ $(document).ready(function(){
                     method: "POST",
                     url: "submit.php",
 
-                    data: {"surname": surname, "firstname": firstname, "middlename":middlename, "email": email, "address": address, "matric": matric, "password":password}
+                    data: {"surname": surname, "firstname": firstname, "middlename":middlename, "email": email, "address": address, "matric": matric, "password":password, "category": category}
 
                    }).done(function( data ) { 
                       var result = $.parseJSON(data); 
@@ -125,7 +146,7 @@ $(document).ready(function(){
 
                         $(".info").hide(1000, function(){});
                         $(".infologin").show(1000, function(){}); 
-                        str = 'Signup successfull.';
+                        str = 'Signup successful.';
                         
 
                       }else{
@@ -133,7 +154,22 @@ $(document).ready(function(){
                       }
 
                     $("#message").html(str);
-
+                    
+                                               
+                            $("#btnlogin2").click(function(y){
+                            y.preventDefault();
+                            
+                             var username = $('#Username').val();
+                             var passwordlogin = $('#Passwordlogin').val();
+                             
+                             
+                              $.post("loginauth.php", {"username": username, "passwordlogin": passwordlogin}, function (results){
+                            
+                                $("#message").html(results);
+                                   
+    
+                            });     
+                    }); 
                 });
 
                     
@@ -180,7 +216,45 @@ $(document).ready(function(){
                     $(".btn1").hide(1000, function(){
                         
                         $(".infologin").show(1000, function(){
-                        
+                            
+                            $("#btnlogin2").click(function(t){
+                            t.preventDefault();
+                            
+                             var username = $('#Username').val();
+                             var passwordlogin = $('#Passwordlogin').val();
+                             
+                             
+                              $.post("loginauth.php", {"username": username, "passwordlogin": passwordlogin}, function (results){
+                            
+                                $("#message").html(results);
+                                   
+    
+                            });
+                             //alert(username); 
+//                             $.ajax({ 
+
+//                    method: "POST",
+//                    url: "loginauth.php",
+//
+//                    data: {"username": username, "passwordlogin": passwordlogin}
+//
+//                   }).done(function( data ) { 
+//                      var result = $.parseJSON(data); 
+//
+//                      var str = '';
+//
+//                      if(result == 1) {
+//
+//                        str = 'login successfull.';
+//                       }
+//                       else{
+//                        str = 'Email or Password is incorrect. Please try again'; 
+//                      }
+//
+//                    $("#message").html(str);
+//
+//                });
+                        }); 
                         }); 
                         }); 
                 });     
@@ -216,7 +290,7 @@ $(document).ready(function(){
                                             <input type="text" name="Surname" placeholder="Surname" value="" id="Surname">
                                             <input type="text" name="Firstname" placeholder="First Name" value="" id="Firstname">
                                             <input type="text" name="Middlename" placeholder="Middle Name" value="" id="Middlename">
-                                            <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><i id="loader_text"></i>
+                                            <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="loader_text"></span>
                                             <input type="email" name="Address" placeholder="Address" value="" id="Address" >
                                                 <input  type="text" name="Matric" id="matric_id" placeholder="Matric No *OPTIONAL*" value="" ><br>
                                                 <input class="chk1" type="radio" name="Search" value="Employed" ><span>Employed</span>
@@ -224,20 +298,20 @@ $(document).ready(function(){
                                                 <input class="chk3" type="radio" name="Search" value="Unemployed"><span>Unemployed</span><br><br>
                                                 <input type="password" name="password" placeholder="Create Your Password" value="" id="password">
                                                 <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
-                                                <div id="message1"></div>
+                                                <br><span id="password_loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="password_text"></span>
                                                 <br>
                                                 <input class="btn2" type="Submit" name="SubmitReg" value="Sign Up">
 					</form>
                                         </div>
                                         <div class="infologin">
                                             <h4>Login</h4>
-                                             <form action="#" method="post">
+                                             <form action="" method="post">
                                            
-                                            <input type="text" name="username" placeholder="Username">                                           
+                                                 <input type="text" name="username" placeholder="E-mail" id="Username">                                           
                                              
-                                            <input type="text" name="password" placeholder="Password">                                            
+                                                 <input type="password" name="password" placeholder="Password" id="Passwordlogin">                                            
 
-                                            <input type="submit" name="submit" value="Login">
+                                            <input type="submit" name="submit" value="Login" id="btnlogin2">
                                          
                                         </form>
                                         </div>   
@@ -249,7 +323,7 @@ $(document).ready(function(){
 			</div>
 			
 			<div class="wthree_footer_copy">
-				<p>© 2018 CALEB UNIVERSITY </p>
+				<p>© 2018 CALEB UNIVERSITY. All Rights Reserved</p>
 			</div>
 		</div>
 	</div>
