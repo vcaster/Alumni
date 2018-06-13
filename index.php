@@ -1,5 +1,91 @@
+<?php require_once('ADMIN/db.php');?>
+<?php require_once("ADMIN/Sessions.php"); ?>
+<?php require_once("ADMIN/Functions.php"); ?>
 
-<!DOCTYPE HTML>
+<?php
+        global $conn;
+        $usernamecorrect = null;
+         $passwordcorrect = null;
+         $usernamecorrects = null;
+         $passwordcorrects = null;
+         $username = null;
+         $passwordlogin = null;
+        if(isset($_POST["Submit"])){
+        $username=mysqli_real_escape_string($conn,$_POST["username"]);
+        $passwordlogin=mysqli_real_escape_string($conn,$_POST["password"]);
+//        $Post=mysqli_real_escape_string($conn,$_POST["Post"]);
+        date_default_timezone_set("Africa/Lagos");
+        $CurrentTime=time();
+        //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+        $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+        $DateTime;
+        if(isset($username) && isset($passwordlogin)){
+            
+            $seenadmin = Loginadmin($username,$passwordlogin,$DateTime);
+            $seenuser = Loginuser($username,$passwordlogin,$DateTime);
+                      
+            
+            
+            
+            if($seenadmin){
+                $_SESSION['User_Timelog'] = $seenadmin['datetime'];
+                $_SESSION['User_Cat'] = $seenadmin['category'];
+                $_SESSION['User_Username'] = $seenadmin['username'];
+                $_SESSION['User_id'] = $seenadmin['id'];
+                $_SESSION['SuccessMessage'] = "Welcome {$_SESSION['User_Username']} ";
+                redirect("ADMIN/admindashboard.php");
+                
+            }
+            elseif($seenuser){
+                $_SESSION['User_Timelog'] = $seenauser['datetime'];
+               $_SESSION['User_Cat'] = $seenuser['category'];
+                $_SESSION['User_Username'] = $seenuser['surname'];
+                $_SESSION['User_id'] = $seenuser['id'];
+                $_SESSION['SuccessMessage'] = "Welcome {$_SESSION['User_Username']} ";
+                redirect("USER/blogger.php");
+                
+            }
+            else{
+                $display  = "INVALID USERNAME/PASSWORD";
+                
+            }
+            
+            
+//        $sqlq="SELECT * FROM admin WHERE username='$username' AND password = '$passwordlogin'";
+//        $Execute1 = mysqli_query($conn,$sqlq);
+//        $admin= mysqli_fetch_array($Execute,MYSQLI_ASSOC);
+//        while($DataRows1 = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
+//            $usernamecorrects = $DataRows1['username'];
+//            $passwordcorrects = $DataRows1['password'];
+//                 
+//        }
+//        
+//        
+//        if (($passwordlogin == $passwordcorrect) && ($username == $usernamecorrect)){
+//            
+//              $_SESSION["ErrorMessage"]="User login successful";
+//              $display = "User login successful";
+//              
+//              //redirect("index.php");
+////            $result = 1;
+//        }
+//        elseif (($passwordlogin == $passwordcorrects) && ($username == $usernamecorrects)) {
+//            
+//                            redirect("ADMIN/admindashboard.php");
+//            
+//            }
+//            else{
+//                  $_SESSION["ErrorMessage"]="INVALID USERNAME/PASSWORD";
+//                   $display  = "INVALID USERNAME/PASSWORD";
+//
+//            }
+//        
+//        
+    }
+  
+}
+?>
+
 <html>
 <head>
 <title>CALEB UNIVERSITY ALUMNI PORTAL</title>
@@ -156,20 +242,20 @@ $(document).ready(function(){
                     $("#message").html(str);
                     
                                                
-                            $("#btnlogin2").click(function(y){
-                            y.preventDefault();
-                            
-                             var username = $('#Username').val();
-                             var passwordlogin = $('#Passwordlogin').val();
-                             
-                             
-                              $.post("loginauth.php", {"username": username, "passwordlogin": passwordlogin}, function (results){
-                            
-                                $("#message").html(results);
-                                   
-    
-                            });     
-                    }); 
+//                            $("#btnlogin2").click(function(y){
+//                            y.preventDefault();
+//                            
+//                             var username = $('#Username').val();
+//                             var passwordlogin = $('#Passwordlogin').val();
+//                             
+//                             
+//                              $.post("loginauth.php", {"username": username, "passwordlogin": passwordlogin}, function (results){
+//                            
+//                                $("#message").html(results);
+//                                   
+//    
+//                            });     
+//                    }); 
                 });
 
                     
@@ -217,19 +303,22 @@ $(document).ready(function(){
                         
                         $(".infologin").show(1000, function(){
                             
-                            $("#btnlogin2").click(function(t){
-                            t.preventDefault();
-                            
-                             var username = $('#Username').val();
-                             var passwordlogin = $('#Passwordlogin').val();
-                             
-                             
-                              $.post("loginauth.php", {"username": username, "passwordlogin": passwordlogin}, function (results){
-                            
-                                $("#message").html(results);
-                                   
-    
-                            });
+                        $("#messager").hide(1000, function(){
+
+                        
+//                            $("#btnlogin2").click(function(t){
+//                            t.preventDefault();
+//                            
+//                             var username = $('#Username').val();
+//                             var passwordlogin = $('#Passwordlogin').val();
+//                             
+//                             
+//                              $.post("loginauth.php", {"username": username, "passwordlogin": passwordlogin}, function (results){
+//                            
+//                                $("#message").html(results);
+//                                   
+//    
+//                            });
                              //alert(username); 
 //                             $.ajax({ 
 
@@ -254,8 +343,9 @@ $(document).ready(function(){
 //                    $("#message").html(str);
 //
 //                });
+//                        }); 
                         }); 
-                        }); 
+                        });
                         }); 
                 });     
                     }); 
@@ -276,45 +366,54 @@ $(document).ready(function(){
                     <h3>CALEB UNIVERSITY, Imota, Lagos State, Nigeria.</h3>
 		<div style="text-align: center" class="wrap">
 			<div class="content-main">
-				<div class="w3ls-subscribe w3ls-subscribe1">
-					<h4>ALUMNI PORTAL</h4>
-                                        <span id="message"></span>
-                                        <div><input class="btn1" type="submit" value="CLICK HERE TO REGISTER"></div>
-                                        <br>
-                                        <div><input class="btnlogin" type="submit" value="CLICK HERE TO LOGIN"></div>
-                                        
-                                        <div class="info">
-                                        <h4>Register</h4>
-<!--					<p>Please fill all</p>-->
-					<form action="index.php" method="post">
-                                            <input type="text" name="Surname" placeholder="Surname" value="" id="Surname">
-                                            <input type="text" name="Firstname" placeholder="First Name" value="" id="Firstname">
-                                            <input type="text" name="Middlename" placeholder="Middle Name" value="" id="Middlename">
-                                            <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="loader_text"></span>
-                                            <input type="email" name="Address" placeholder="Address" value="" id="Address" >
-                                                <input  type="text" name="Matric" id="matric_id" placeholder="Matric No *OPTIONAL*" value="" ><br>
-                                                <input class="chk1" type="radio" name="Search" value="Employed" ><span>Employed</span>
-                                                <input class="chk2" type="radio" name="Search" value="Employed" ><span>Self Employed</span>
-                                                <input class="chk3" type="radio" name="Search" value="Unemployed"><span>Unemployed</span><br><br>
-                                                <input type="password" name="password" placeholder="Create Your Password" value="" id="password">
-                                                <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
-                                                <br><span id="password_loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="password_text"></span>
-                                                <br>
-                                                <input class="btn2" type="Submit" name="SubmitReg" value="Sign Up">
-					</form>
-                                        </div>
-                                        <div class="infologin">
-                                            <h4>Login</h4>
-                                             <form action="" method="post">
-                                           
-                                                 <input type="text" name="username" placeholder="E-mail" id="Username">                                           
-                                             
-                                                 <input type="password" name="password" placeholder="Password" id="Passwordlogin">                                            
+                <div class="w3ls-subscribe w3ls-subscribe1">
+                        <h4>ALUMNI PORTAL</h4>
+                        
+                        <span id="message"></span>
+                        <div><?php echo Message();
+                               echo SuccessMessage();
+                               if (!empty($display)){ ?>
+                            <span id="messager"> <?php echo $display; ?> </span>
+                                <?php    
+                               }
+                            ?></div>
+                        <div><input class="btn1" type="submit" value="CLICK HERE TO REGISTER"></div>
+                        <br>
+                        <div><input class="btnlogin" type="submit" value="CLICK HERE TO LOGIN"></div>
 
-                                            <input type="submit" name="submit" value="Login" id="btnlogin2">
-                                         
-                                        </form>
-                                        </div>   
+                        <div class="info">
+                        <h4>Register</h4>
+<!--					<p>Please fill all</p>-->
+                        <form action="index.php" method="post">
+                            <input type="text" name="Surname" placeholder="Surname" value="" id="Surname">
+                            <input type="text" name="Firstname" placeholder="First Name" value="" id="Firstname">
+                            <input type="text" name="Middlename" placeholder="Middle Name" value="" id="Middlename">
+                            <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="loader_text"></span>
+                            <input type="email" name="Address" placeholder="Address" value="" id="Address" >
+                                <input  type="text" name="Matric" id="matric_id" placeholder="Matric No *OPTIONAL*" value="" ><br>
+                                <input class="chk1" type="radio" name="Search" value="Employed" ><span>Employed</span>
+                                <input class="chk2" type="radio" name="Search" value="Employed" ><span>Self Employed</span>
+                                <input class="chk3" type="radio" name="Search" value="Unemployed"><span>Unemployed</span><br><br>
+                                <input type="password" name="password" placeholder="Create Your Password" value="" id="password">
+                                <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
+                                <br><span id="password_loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="password_text"></span>
+                                <br>
+                                <input class="btn2" type="Submit" name="SubmitReg" value="Sign Up">
+                        </form>
+                        </div>
+                        <div class="infologin">
+                            <h4>Login</h4>
+                            
+                            <form action="index.php" method="post">
+
+                                 <input type="text" name="username" placeholder="E-mail" id="Username">                                           
+
+                                 <input type="password" name="password" placeholder="Password" id="Passwordlogin">                                            
+
+                            <input type="Submit" name="Submit" value="Login" id="btnlogin2">
+
+                        </form>
+                        </div>   
                                         
                                         
                                         

@@ -52,6 +52,28 @@ a:hover {
   transition-delay: 300ms;
 
 }
+.FieldInfo{
+    color: rgb(251, 174, 44);
+    font-family: Bitter,Georgia,"Times New Roman",Times,serif;
+    font-size: 1.2em;
+}
+.CommentBlock{
+background-color:#F6F7F9;
+}
+.Comment-info{
+	color: #365899;
+	font-family: sans-serif;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding-top: 10px;
+        
+	
+}
+.comment{
+    margin-top:-2px;
+    padding-bottom: 10px;
+    font-size: 1.1em
+}
 .page-container.sidebar-collapsed .left-content {
    float: right;
    width: 96%;

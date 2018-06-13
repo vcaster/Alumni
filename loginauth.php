@@ -1,9 +1,13 @@
+
+
 <?php 
 
 //$value = $_POST["sugesstion"];
 //echo $value;
      $usernamecorrect = null;
      $passwordcorrect = null;
+     $usernamecorrects = null;
+     $passwordcorrects = null;
      $username = null;
      $passwordlogin = null;
      $database = "alumni_cms";
@@ -22,9 +26,24 @@
             $passwordcorrect = $DataRows['password'];
                  
         }
+        $sqlq="SELECT * FROM admin WHERE username='$username' AND password = '$passwordlogin'";
+            $Execute1 = mysqli_query($conn,$sqlq);
+        
+        while($DataRows1 = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
+            $usernamecorrects = $DataRows1['username'];
+            $passwordcorrects = $DataRows1['password'];
+                 
+        }
+        
+        
         if (($passwordlogin == $passwordcorrect) && ($username == $usernamecorrect)){
             
               echo "login successful.";
+//            $result = 1;
+        }
+        else if (($passwordlogin == $passwordcorrects) && ($username == $usernamecorrects)){
+            
+                <?php redirect("ADMIN/admindashboard.php"); ?>
 //            $result = 1;
         }
         else{

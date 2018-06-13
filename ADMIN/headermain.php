@@ -157,7 +157,7 @@
                                         <div class="profile_img">	
                                                 <span class="prfil-img"><img src="images/p1.png" alt="" width="50" height="50"> </span> 
                                                 <div class="user-name">
-                                                        <p>Malorum</p>
+                                                        <p><?php echo $_SESSION['User_Username']; ?></p>
                                                         <span>Administrator</span>
                                                 </div>
                                                 <i class="fa fa-angle-down lnr"></i>
@@ -168,7 +168,7 @@
                                     <ul class="dropdown-menu drp-mnu">
                                             <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
                                             <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> 
-                                            <li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                        <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a> </li>
                                     </ul>
                             </li>
                             </ul>
