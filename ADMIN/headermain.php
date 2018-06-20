@@ -155,7 +155,7 @@
                             <li class="dropdown profile_details_drop">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         <div class="profile_img">	
-                                                <span class="prfil-img"><img src="images/p1.png" alt="" width="50" height="50"> </span> 
+                                            <span class="prfil-img"><img class="img-circle img-responsive" src="images/icon1.png" alt="" width="50" height="50"> </span> 
                                                 <div class="user-name">
                                                         <p><?php echo $_SESSION['User_Username']; ?></p>
                                                         <span>Administrator</span>

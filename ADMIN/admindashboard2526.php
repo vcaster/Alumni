@@ -397,9 +397,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 if ($SrNo > 0){
                 
                 $Showdiv=true;
-                if($Category == 0){
-                    $Showopt=false;
-                }
             }else{
                 $Showdiv=false;
                 echo "<br><div class=\"alert alert-danger\"> NOT FOUND </div>";
@@ -427,13 +424,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<th>Firstname</th>
 			<th>Middlename</th>
 			<th>E-mail</th>
+			<th>Address</th>
 			<th>Matric</th>
-                        <th>Address</th>
-			<th>Phone no</th>
-                        <th>Department</th>
-                        <th>Graduation year</th>
-                        
-                        <!--<th>User type</th>-->
+			<th>User type</th>
 <!--			<th>Details</th>-->
 			
 		</tr>
@@ -442,7 +435,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 if (isset($_GET['Search']))
                 {
                 $Search = $_GET['Searchbox'];
-                $sql = "SELECT * FROM info WHERE  surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%' OR department LIKE '%$Search%' OR gradyear LIKE '%$Search%' OR phoneno LIKE '%$Search%' ";
+                $sql = "SELECT * FROM info WHERE  surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%'";
                 $SrNo=0;
                 $Execute = mysqli_query($conn,$sql);
                 
@@ -455,10 +448,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         $Address=$DataRows["address"];
                         $Matric=$DataRows["matric"];
                         $Category=$DataRows["category"];
-                        $phoneno=$DataRows["phoneno"];
-                        $dept=$DataRows["department"];
-                        $grad=$DataRows["gradyear"];
-                        
                         $SrNo++;
                 ?>
         <tr>
@@ -473,23 +462,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     if(strlen($Address) > 6) {$Address = substr($Address,0,6).'...';} echo $Address;
                     ?></td>
             <td><?php echo $Matric; ?></td>
-            <td><?php echo $phoneno; ?></td>
-            <td><?php echo $dept; ?></td>
-            <td><?php echo $grad; ?></td>
-            <td <?php global $Showopt;  if ($Showopt == false){ ?> style="display:none"  > <?php } ?>
-            <!--<td>-->
-                <a href="updatealumni.php?updateid=<?php echo $Id; ?>"><span class="btn btn-success"><span class="fa fa-plus"></span></span></a> 
+            <td><a href="updatealumni.php?updateid=<?php echo $Id; ?>"><span class="btn btn-success"><span class="fa fa-plus"></span></span></a> 
                 <a href="deletealumni.php?deletealumniid=<?php echo $Id; ?>"><span class="btn btn-danger"><span class="fa fa-close"></span></span></a> 
-           
             </td>            
             <td></td>
             <!--<td></td>-->
-        <?php } ?>
+        
 <?php 
+            }
             
-                }
-                
-                ?>    
+                } ?>    
                         </table>
                   </div>
              </div>

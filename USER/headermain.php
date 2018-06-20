@@ -1,10 +1,18 @@
+<?php
+             $conn; 
+             $Imagedis =null;
+             $sql = "SELECT * FROM info WHERE id='$userid'";
+             $Execute = mysqli_query($conn,$sql);
+             while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
+                            
+                 $Imagedis=$DataRows["dp"];
+                 }     
+             $_SESSION['dp'] = $Imagedis;
+            
+             ?>
 <div class="header-main">
             <div class="header-left">
-                    <div class="logo-name">
-                             <a href="admindashboard.php"> <h1>ADMIN</h1> 
-                                 
-                              </a> 								
-                    </div>
+                    
                     <!--search-box-->
                             <div class="search-box">
                                     <form>
@@ -26,7 +34,7 @@
                                     </div>
                             </li>
                             <li><a href="#">
-                               <div class="user_img"><img src="images/p4.png" alt=""></div>
+                                    <div class="user_img"><img src="images/p4.png" alt=""></div>
                                <div class="notification_desc">
                                     <p>Lorem ipsum dolor</p>
                                     <p><span>1 hour ago</span></p>
@@ -154,8 +162,15 @@
                             <ul>
                             <li class="dropdown profile_details_drop">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <div class="profile_img">	
-                                                <span class="prfil-img"><img src="images/p1.png" alt="" width="50" height="50"> </span> 
+                                        <div class="profile_img">
+                                            
+                                                <span class="prfil-img"><img class=" img-responsive img-circle " src="images/<?php                                             
+                                            if($_SESSION['dp'] != null)
+                                            {
+                                                echo $_SESSION['dp'];
+                                            }
+                                          else{
+                                              echo "icon1.png";} ?>" width="50" height="50" alt=""> </span> 
                                                 <div class="user-name">
                                                         <p><?php echo $_SESSION['User_Username']; ?></p>
                                                         <span>Alumnus</span>

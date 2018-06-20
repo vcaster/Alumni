@@ -7,20 +7,11 @@
         exit();
     }
     
-    function Loginadmin($Username,$Password){
-    global $conn;
-    $sql="SELECT * FROM admin
-    WHERE username='$Username' AND password='$Password'";
-    $Execute=mysqli_query($conn,$sql);
-    if($admin= mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
-	return $admin;
-    }else{
-	return null;
-    }
-    }
+    
     
       function Loginuser($Username1,$Password1){
     global $conn;
+    
     $sql3="SELECT * FROM info
     WHERE email='$Username1' AND password='$Password1'";
     $Execute3=mysqli_query($conn,$sql3);

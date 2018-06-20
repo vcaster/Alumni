@@ -108,6 +108,7 @@ if(empty($Title)){
                     <div class="form-group">
                     <label for="postarea"><span class="FieldInfo">Post:</span></label>
                     <textarea class="form-control" name="Post" id="postarea"></textarea>
+                    </div>
                     <br>
             <input class="btn btn-success btn-block" type="Submit" name="Submit" value="Add New Post">
                     </fieldset>

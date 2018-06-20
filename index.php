@@ -21,28 +21,26 @@
         $DateTime;
         if(isset($username) && isset($passwordlogin)){
             
-            $seenadmin = Loginadmin($username,$passwordlogin,$DateTime);
-            $seenuser = Loginuser($username,$passwordlogin,$DateTime);
+            $seenuser = Loginuser($username,$passwordlogin);
                       
             
             
             
-            if($seenadmin){
-                $_SESSION['User_Timelog'] = $seenadmin['datetime'];
-                $_SESSION['User_Cat'] = $seenadmin['category'];
-                $_SESSION['User_Username'] = $seenadmin['username'];
-                $_SESSION['User_id'] = $seenadmin['id'];
-                $_SESSION['SuccessMessage'] = "Welcome {$_SESSION['User_Username']} ";
-                redirect("ADMIN/admindashboard.php");
-                
-            }
-            elseif($seenuser){
+            if($seenuser){
                 $_SESSION['User_Timelog'] = $seenauser['datetime'];
-               $_SESSION['User_Cat'] = $seenuser['category'];
-                $_SESSION['User_Username'] = $seenuser['surname'];
+                $_SESSION['User_image'] = $seenauser['dp'];
+                $_SESSION['User_bio'] = $seenauser['bio'];
+                $_SESSION['User_Cat'] = $seenuser['category'];
                 $_SESSION['User_id'] = $seenuser['id'];
                 $_SESSION['SuccessMessage'] = "Welcome {$_SESSION['User_Username']} ";
-                redirect("USER/blogger.php");
+                if ($_SESSION['User_Cat'] == 1){
+                    $_SESSION['User_Username'] = "{$seenuser['surname']} {$seenuser['firstname']}";
+                    redirect("USER/blogger.php");
+                }
+                elseif ($_SESSION['User_Cat'] == 0){
+                    $_SESSION['User_Username'] = $seenuser['email'];
+                    redirect("ADMIN/admindashboard.php");
+                }
                 
             }
             else{
@@ -90,6 +88,9 @@
 <head>
 <title>CALEB UNIVERSITY ALUMNI PORTAL</title>
 
+
+<link href="css/bootstrap3.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 
 <!-- for-mobile-apps -->
@@ -103,6 +104,8 @@
 <!-- //font-awesome icons -->
 <!--Google Fonts-->
 <!-- <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet"> -->
+<script src="js/bootstrap3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -213,6 +216,9 @@ $(document).ready(function(){
                     var address = $('#Address').val();
                     var matric = $('#matric_id').val();
                     var password = $('#password').val();
+                    var phoneno = $('#phoneno').val();
+                    var grad = $('#grad').val();
+                    var dept = $('#dept').val();
                     var category = 1;
                     
                     
@@ -221,7 +227,7 @@ $(document).ready(function(){
                     method: "POST",
                     url: "submit.php",
 
-                    data: {"surname": surname, "firstname": firstname, "middlename":middlename, "email": email, "address": address, "matric": matric, "password":password, "category": category}
+                    data: {"surname": surname, "firstname": firstname, "middlename":middlename, "email": email, "address": address, "matric": matric, "phoneno":phoneno, "dept":dept, "grad":grad, "password":password, "category": category}
 
                    }).done(function( data ) { 
                       var result = $.parseJSON(data); 
@@ -389,12 +395,66 @@ $(document).ready(function(){
                             <input type="text" name="Firstname" placeholder="First Name" value="" id="Firstname">
                             <input type="text" name="Middlename" placeholder="Middle Name" value="" id="Middlename">
                             <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="loader_text"></span>
-                            <input type="email" name="Address" placeholder="Address" value="" id="Address" >
+                            <input type="text" name="Address" placeholder="Address" value="" id="Address" >
+                            <input type="text" name="phoneno" placeholder="Phone number" value="" id="phoneno" >
+                            <label class="pull-left" style="margin-left: 5%;">Department:</label>
+                            
+                            <select id="dept" style="background-color: #000; color: #fff; opacity: 0.8;  width: 75%; margin: 15px;" class="form-control center-block" >
+         
+                                <option>Accounting</option>
+                                <option>Architecture</option>
+                                <option>Banking and Finance</option>
+                                <option>Biochemistry</option>
+                                <option>Business Administration</option>
+                                <option>Chemistry</option>
+                                <option>Computer Science</option>
+                                <option>Criminology & Security Studies</option>
+                                <option>Cybersecurity</option>
+                                <option>Economics</option>
+                                <option>English & Literary Studies</option>
+                                <option>Enivironmental Management & Toxicology</option>
+                                <option>Estate Management</option>
+                                <option>Forensic Science</option>
+                                <option>History & Diplomatic Studies</option>
+                                <option>Industrial Chemistry</option>
+                                <option>Information Science</option>
+                                <option>International Relations</option>
+                                <option>Mass Communication</option>
+                                <option>Mathematics</option>
+                                <option>Microbiology & Industrial Biotechnology</option>
+                                <option>Peace Studies & Conflict Resolution</option>
+                                <option>Philosophy</option>
+                                <option>Physics</option>
+                                <option>Physics with Computational Modeling</option>
+                                <option>Physics with Electronics</option>
+                                <option>Plant Sciences & Aquaculture</option>
+                                <option>Political Science</option>
+                                <option>Psychology</option>
+                                <option>Public Administration</option>
+                                <option>Quantity Surveying</option>
+                                <option>Software Engineering</option>
+                                <option>Statistics</option>
+                                <option>Taxation</option>
+                                <option>Zoology & Aquaculture</option>
+                            </select>
+                            <label class="pull-left" style="margin-left: 5%;">Graduation Year :</label>
+                            
+                            <select id="grad" style="background-color: #000; color: #fff; opacity: 0.8;  width: 75%; margin: 15px;" class="form-control center-block" >
+                                <?php $year  = 2010; 
+                                            while($year < 2018) 
+                                            {
+                                                $year++
+                                               ?>
+                                  <option><?php echo $year; ?></option>
+                                  <?php } ?>
+                                </select>
+
+
                                 <input  type="text" name="Matric" id="matric_id" placeholder="Matric No *OPTIONAL*" value="" ><br>
                                 <input class="chk1" type="radio" name="Search" value="Employed" ><span>Employed</span>
                                 <input class="chk2" type="radio" name="Search" value="Employed" ><span>Self Employed</span>
                                 <input class="chk3" type="radio" name="Search" value="Unemployed"><span>Unemployed</span><br><br>
-                                <input type="password" name="password" placeholder="Create Your Password" value="" id="password">
+                                <input type="password" name="password" placeholder="Create Password" value="" id="password">
                                 <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
                                 <br><span id="password_loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="password_text"></span>
                                 <br>

@@ -80,7 +80,7 @@
 <!--inner block start here-->
 <div class="inner-block">
     <div class="cols-grids panel-widget">
-    	<h2>Update Alumni</h2>
+    	<h2>Update Alumnus</h2>
         <div></div>
         <?php 
             

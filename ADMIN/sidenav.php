@@ -2,7 +2,7 @@
 
 <div class="sidebar-menu">
 <!--        <br>-->
-        &nbsp;<img id="logo" src="images/logo.png" alt="Logo" height="80" width="80" > 
+<img id="logo" style="padding-left: 10px; padding-top: 5px;" class="img-responsive" src="images/logo.png" alt="Logo" height="80" width="80" > 
             <div class="logo"> 
                 <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> 
                 <a href="#"> <span id="logo" ></span> 

@@ -83,7 +83,7 @@
                     $sql5="SELECT * FROM admin_panel WHERE datetime LIKE '%$Search%' OR title LIKE '%$Search%' OR category LIKE '%$Search%' OR post LIKE '%$Search%' ";
                     
                 }else{
-                $sql5="SELECT * FROM admin_panel ORDER BY id desc";}
+                $sql5="SELECT * FROM admin_panel WHERE category='test' ORDER BY id desc";}
                 $Execute = mysqli_query($conn,$sql5);
                 while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
                         $PostId=$DataRows["id"];

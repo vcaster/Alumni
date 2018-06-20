@@ -57,6 +57,15 @@
 	
     }
  }  
+ function Confirm_User(){
+    if(Logincheckadmin()){
+        
+        if($_SESSION['User_Cat'] != 1){
+            redirect("404.php");
+        }
+	
+    }
+ }
  
 ?>
 

@@ -30,7 +30,7 @@ if(empty($Username) || empty($Password) || empty($Passwordcon) ){
 	
 }else{
 	global $conn;
-	$sql = "INSERT INTO admin(username,password,addedby,datetime)
+	$sql = "INSERT INTO info(email,password,addedby,datetime)
 	VALUES('$Username','$Password','$Admin','$DateTime')";
 	$Execute = mysqli_query($conn,$sql);
 	if($Execute){
@@ -120,12 +120,12 @@ if(empty($Username) || empty($Password) || empty($Passwordcon) ){
                         </tr>
                 <?php
                 global $conn;
-                $sql1="SELECT * FROM admin ORDER BY id desc";
+                $sql1="SELECT * FROM info WHERE category = '0' ORDER BY id desc ";
                 $Execute = mysqli_query($conn,$sql1);
                 $SrNo=0;
                 while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
                         $Id=$DataRows["id"];
-                        $Username=$DataRows["username"];
+                        $Username=$DataRows["email"];
                         $Addedby=$DataRows["addedby"];
                         $DateTime=$DataRows["datetime"];
                         $SrNo++;

@@ -1,8 +1,33 @@
 <?php require_once('db.php');?>
 <?php require_once("Sessions.php"); ?>
 <?php require_once("Functions.php"); ?>
-<?php Confirm_Login();?>
-
+<?php Confirm_Login();  $userid = $_SESSION['User_id']; ?>
+<?php Confirm_User(); ?>
+   <?php
+            
+            
+            if(isset($_POST['Submit']))    
+            {   
+                
+                
+                $bio = $_POST['bio'];
+                $Image=$_FILES["Image"]["name"];
+                $Target="images/".basename($_FILES["Image"]["name"]);
+                global $conn;
+                $sql="UPDATE info SET dp ='$Image' , bio = '$bio' WHERE id='$userid'";
+                $Execute = mysqli_query($conn,$sql);
+                 move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
+                 
+                if($Execute){
+                $_SESSION["SuccessMessage"]="Profile Updated Successfully";
+                redirect("profile.php");
+                }
+                else{
+                $_SESSION["Message"]="did not work";
+                redirect("profile.php");
+                }
+            }
+            ?>
 
 <!DOCTYPE HTML>
 <html>
@@ -169,7 +194,14 @@
                             <li class="dropdown profile_details_drop">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         <div class="profile_img">	
-                                            <span class="prfil-img"><img src="images/p1.png" alt="" width="50" height="50"> </span> 
+                                            
+                                            <span class="prfil-img"><img class=" img-responsive img-circle " src="images/<?php                                             
+                                            if($_SESSION['dp'] != null)
+                                            {
+                                                echo $_SESSION['dp'];
+                                            }
+                                          else{
+                                              echo "icon1.png";} ?>" width="50" height="50" alt="profile pic"> </span> 
                                                 <div class="user-name">
                                                         <p><?php echo $_SESSION['User_Username']; ?></p>
                                                         <span>Alumnus</span>
@@ -213,42 +245,52 @@
     <div class="cols-grids panel-widget">
     	
         <div class="col-md-8">
-            <?php
-                global $conn;
-                if (isset($_GET['Search']))
-                {
-                    $Search = $_GET['Searchbox'];
-                   
-                }else{
-                    $posturl = $_GET['id'];
-                $sql5="SELECT * FROM admin_panel WHERE id='$posturl'";}
-                $Execute = mysqli_query($conn,$sql5);
-                while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
-                        $PostId=$DataRows["id"];
-			                        
-                ?>
-         <div class="typo-wells">
-                    <div><?php echo Message();
+            <div><?php echo Message();
                    echo SuccessMessage();
                 ?></div>
+                                 
+         <div class="typo-wells">
+                    
+             <?php
+             $conn;             
+             $sql = "SELECT * FROM info WHERE id='$userid'";
+             $Execute = mysqli_query($conn,$sql);
+             while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
+                            
+                 $Imagedis=$DataRows["dp"];
+                 $Bio=$DataRows["bio"];
+             }     
+             $_SESSION['dp'] = $Imagedis;
+             $_SESSION['bioo'] = $Bio;
+             ?>
 
                    <div class="well">
                        
-                       <img class="img-responsive img-rounded" src="Uploaded/<?php echo $Image;  ?>" >
+                       <img class="img-responsive img-circle center-block " src="images/<?php                                             
+                                            if($_SESSION['dp'] != null)
+                                            {
+                                                echo $_SESSION['dp'];
+                                            }
+                                          else{
+                                              echo "icon1.png";} ?>" width="200" height="200" alt="" >
                        <div class="caption">
                         <br>
-			<h1 id="heading"> Update Profile Picture</h1>
-                        <form action="fullpost.php?id=<?php echo $PostId; ?>" method="post" enctype="multipart/form-data">
+			<h3 id="heading"> Update Profile Picture</h3>
+                       
+                  <form action="profile.php" method="post" enctype="multipart/form-data">
                     <fieldset>
                     <div class="form-group">
-                    <label for="Name"><span class="FieldInfo">Name:</span></label>
-                    <input class="form-control" type="text" name="Name" id="name" placeholder="Name">
+                    <label for="imageselect"><span class="FieldInfo">Select Image:</span></label>
+                    <input type="File" class="form-control" name="Image" id="imageselect">
                     </div>
-                                        <div class="form-group">
-                    <label for="postarea"><span class="FieldInfo">Post:</span></label>
-                    <textarea class="form-control" name="Post" id="postarea"></textarea>
-                    <br>
-            <input class="btn btn-primary" type="Submit" name="Submitcomment" value="Submit">
+<!--                        <div class="form-group">
+                    <label for="bio"><span class="FieldInfo">Current bio:</span></label>
+                    <span><?php // echo  $Bio; ?></span><br>
+                    <label for="bio"><span class="FieldInfo">Bio:</span></label>
+                    <textarea class="form-control" name="bio" id="bio"></textarea>-->
+                                        
+<!--                     </div>-->
+                      <input class="btn btn-primary" type="Submit" name="Submit" value="Submit">
                     </fieldset>
                     <br>
             </form>
@@ -260,23 +302,7 @@
 	</div>
                         
             </div>
-        <div class="col-md-4">
-            <div class="typo-wells">
-         
-			  <h3 class="ghj">Wells</h3>
-				   <div class="well">
-					There are many variations of passages of Lorem Ipsum available, but
-                                        the majority have suffered alteration
-				   </div>
-				   <div class="well">
-					It is a long established fact that a reader will be
-                                        distracted by the readable content of a page when looking at its layout.
-                                        The point of using Lorem Ipsum is that it has a more-or-less normal distribution 
-                                        of letters, as opposed to using 'Content here
-				   </div>
-		  
-            </div>
-        </div>
+        
 	 </div>	
 </div>
 </div>

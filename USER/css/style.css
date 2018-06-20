@@ -229,7 +229,7 @@ background-color:#F6F7F9;
     display: block;
 }
 .menu {
-    padding:4.2em 0em 0em 0em;
+    padding:2.5em 0em 0em 0em;
 }
 /*----*/
 .page-container.sidebar-collapsed .left-content .fixed {
@@ -967,6 +967,19 @@ ul.dropdown-menu.drp-mnu li {
     line-height: 1.7em;
 }
 .market-update-right i.fa.fa-eye {
+     font-size: 3em;
+    color:#FC8213;
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    text-align: center;
+    border-radius: 49px;
+    -webkit-border-radius: 49px;
+    -moz-border-radius:49px;
+    -o-border-radius:49px;
+    line-height: 1.7em;
+}
+.market-update-right i.fa.fa-money {
      font-size: 3em;
     color:#FC8213;
     width: 80px;
@@ -3363,6 +3376,12 @@ li.dropdown.head-dpdn a.dropdown-toggle {
     height: 60px;
     margin-top: 0.7em;
 }
+.market-update-right i.fa.fa-money{
+	font-size: 2em;
+    width: 60px;
+    height: 60px;
+    margin-top: 0.7em;
+}
 .market-update-right i.fa.fa-envelope-o {
 	font-size: 2em;
     width: 60px;
@@ -3616,6 +3635,13 @@ li.dropdown.head-dpdn a.dropdown-toggle {
     margin-top: 0px;
 }
 .market-update-right i.fa.fa-eye{
+	font-size: 2em;
+    width: 60px;
+    height: 60px;
+    line-height: 1.9em;
+     margin-top: 0em;
+}
+.market-update-right i.fa.fa-money{
 	font-size: 2em;
     width: 60px;
     height: 60px;

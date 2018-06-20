@@ -335,7 +335,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 if (isset($_GET['Search']))
                 {
                 $Search = $_GET['Searchbox'];
-                $sql = "SELECT * FROM info WHERE  surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%' ";
+                $sql = "SELECT * FROM info WHERE surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%' ";
                 $SrNo=0;
                 $Execute = mysqli_query($conn,$sql);
                 
@@ -461,7 +461,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</tr>
 <?php
 $conn;
-$sql9="SELECT * FROM info ORDER BY id desc;";
+$sql9="SELECT * FROM info WHERE category='1' ORDER BY id desc;";
 $Execute1 = mysqli_query($conn,$sql9);
 $SrNo=0;
 while($DataRows=mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){

@@ -1,11 +1,11 @@
 <?php require_once('db.php');?>
 <?php require_once("Sessions.php"); ?>
 <?php require_once("Functions.php"); ?>
-<?php Confirm_Login();?>
+<?php Confirm_Login(); $userid = $_SESSION['User_id']; ?>
+<?php Confirm_User(); ?>
 
 <?php 
     if(isset($_POST["Submitcomment"])){
-    $Name = mysqli_real_escape_string($conn,$_POST["Name"]);
     $Post = mysqli_real_escape_string($conn,$_POST["Post"]);
     date_default_timezone_set("Africa/Lagos");
     $CurrentTime=time();
@@ -14,21 +14,15 @@
     $DateTime;
     $PostId = $_GET['id'];
     $Admin = $_SESSION['User_Username'];
-    if(empty($Name) || empty($Post)){
-        $_SESSION["ErrorMessage"]="All Fields must be filled out";
-        redirect("fullpost.php?id=$PostId");
-        //exit;
-//	
-//	Redirect_to("categories.php");
-    }
-    elseif(strlen($Category)>500){
+    $commetdp = $_SESSION['dp'];
+    if(strlen($Category)>500){
 	$_SESSION["ErrorMessage"]="Only 500 charaters are allowed";
 	redirect("fullpost.php?id=$PostId");
 	
     }else{
 	global $conn;
-	$sql="INSERT INTO comments(datetime,comments,status,admin_panel_id,addedby)
-	VALUES('$DateTime','$Post','OFF','$PostId','$Admin')";
+	$sql="INSERT INTO comments(datetime,comments,status,admin_panel_id,addedby,image)
+	VALUES('$DateTime','$Post','OFF','$PostId','$Admin','$commetdp')";
 	$Execute = mysqli_query($conn,$sql);
 	if($Execute){
 	$_SESSION["SuccessMessage"]="Comments Added Successfully";
@@ -53,12 +47,20 @@
 	   <div class="mother-grid-inner">
             <!--header start here-->
 		<div class="header-main">
+                    <?php
+             $conn; 
+             $Imagedis =null;
+             $sql = "SELECT * FROM info WHERE id='$userid'";
+             $Execute = mysqli_query($conn,$sql);
+             while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
+                            
+                 $Imagedis=$DataRows["dp"];
+                 }     
+             $_SESSION['dp'] = $Imagedis;
+            
+             ?>
             <div class="header-left">
-                    <div class="logo-name">
-                             <a href="admindashboard.php"> <h1>ADMIN</h1> 
-                                 
-                              </a> 								
-                    </div>
+                    
                     <!--search-box-->
                             <div class="search-box">
                                 <form action="blogger.php" method="GET">
@@ -208,11 +210,18 @@
                             <ul>
                             <li class="dropdown profile_details_drop">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <div class="profile_img">	
-                                            <span class="prfil-img"><img src="images/p1.png" alt="" width="50" height="50"> </span> 
+                                        <div class="profile_img">
+                                            
+                                                <span class="prfil-img"><img class=" img-responsive img-circle " src="images/<?php                                             
+                                            if($_SESSION['dp'] != null)
+                                            {
+                                                echo $_SESSION['dp'];
+                                            }
+                                          else{
+                                              echo "icon1.png";} ?>" width="50" height="50" alt=""> </span> 
                                                 <div class="user-name">
                                                         <p><?php echo $_SESSION['User_Username']; ?></p>
-                                                        <span>Administrator</span>
+                                                        <span>Alumnus</span>
                                                 </div>
                                                 <i class="fa fa-angle-down lnr"></i>
                                                 <i class="fa fa-angle-up lnr"></i>
@@ -221,7 +230,7 @@
                                     </a>
                                     <ul class="dropdown-menu drp-mnu">
                                             <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
-                                            <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> 
+                                            <li> <a href="profile.php"><i class="fa fa-user"></i> Profile</a> </li> 
                                         <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a> </li>
                                     </ul>
                             </li>
@@ -280,7 +289,7 @@
 
                    <div class="well">
                        
-                       <img class="img-responsive img-rounded" src="Uploaded/<?php echo $Image;  ?>" >
+                       <img class="img-responsive img-rounded" src="../ADMIN/Uploaded/<?php echo $Image;  ?>" >
                        <div class="caption">
                         <br>
 			<h1 id="heading"> <?php echo htmlentities($Title); ?></h1>
@@ -305,14 +314,15 @@ WHERE admin_panel_id='$PostId'AND status='ON' ";
 $Execute = mysqli_query($conn,$sql);
         while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
 	$CommentDate=$DataRows["datetime"];
-	$CommenterName=$DataRows["name"];
+        $Addedby = $DataRows["addedby"];
 	$Comments=$DataRows["comments"];
+        $dp=$DataRows['image'];
 
 
 ?>
 <div class=" well">
-    <img style="margin-left: 10px; margin-top: 10px; padding-bottom:10px;" class="pull-left" src="images/p1.png" width='70' height='70'>
-	<p style="margin-left: 90px; padding: 3px; width: 86%; word-break: break-all; word-wrap: break-word;" class="Comment-info"><?php echo $CommenterName; ?></p>
+    <img style="margin-left: 10px; margin-top: 10px; padding-bottom:10px;" class="pull-left img-circle img-responsive" src="images/<?php echo $dp; ?>" width='70' height='70'>
+	<p style="margin-left: 90px; padding: 3px; width: 86%; word-break: break-all; word-wrap: break-word;" class="Comment-info"><?php echo $Addedby; ?></p>
 	<p style="margin-left: 90px; padding: 3px; width: 86%; word-break: break-all; word-wrap: break-word;" class="description"><?php echo $CommentDate; ?></p>
 	<p style="margin-left: 90px;padding: 3px; width: 86%; word-break: break-all; word-wrap: break-word;" class="Comment"><?php echo nl2br($Comments); ?></p>
 	
@@ -326,11 +336,7 @@ $Execute = mysqli_query($conn,$sql);
                 
             <form action="fullpost.php?id=<?php echo $PostId; ?>" method="post" enctype="multipart/form-data">
                     <fieldset>
-                    <div class="form-group">
-                    <label for="Name"><span class="FieldInfo">Name:</span></label>
-                    <input class="form-control" type="text" name="Name" id="name" placeholder="Name">
-                    </div>
-                                        <div class="form-group">
+                   <div class="form-group">
                     <label for="postarea"><span class="FieldInfo">Post:</span></label>
                     <textarea class="form-control" name="Post" id="postarea"></textarea>
                     <br>
