@@ -177,5 +177,26 @@ $(".sidebar-icon").click(function() {
 <?php include("copyright.php") ?>
 </body>
 </html>
-
+$("#step2,#step4,#step5").hide();
+                    $("#paybtn").click(function () {
+                        $("#step1").hide(1000, function(){
+                            $("#paybtn").hide(1000, function(){
+                            $("#step2").show(1000, function(){                            
+                                $("#inter").click(function () {
+                                    $("#loc").hide(function () {
+                                    $("#step4").show(1000, function(t){
+                                        t.preventDefault();
+                                });
+                                });
+                                });
+                                 $("#loc").click(function () {
+                                     $("#inter").hide(function () {
+                                      $("#step5").show(1000, function(){
+                                });
+                               });
+                                });
+                            });
+                        });
+                         });
+                    });
               

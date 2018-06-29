@@ -32,13 +32,15 @@
                 $_SESSION['User_bio'] = $seenauser['bio'];
                 $_SESSION['User_Cat'] = $seenuser['category'];
                 $_SESSION['User_id'] = $seenuser['id'];
-                $_SESSION['SuccessMessage'] = "Welcome {$_SESSION['User_Username']} ";
+                
                 if ($_SESSION['User_Cat'] == 1){
                     $_SESSION['User_Username'] = "{$seenuser['surname']} {$seenuser['firstname']}";
+                    $_SESSION['SuccessMessage'] = "Welcome {$_SESSION['User_Username']} ";
                     redirect("USER/blogger.php");
                 }
                 elseif ($_SESSION['User_Cat'] == 0){
                     $_SESSION['User_Username'] = $seenuser['email'];
+                    $_SESSION['SuccessMessage'] = "Welcome {$_SESSION['User_Username']} ";
                     redirect("ADMIN/admindashboard.php");
                 }
                 

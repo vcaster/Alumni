@@ -27,11 +27,51 @@
 	redirect("dues.php");
 	
 	}
-        else{
+        elseif (isset($_POST["submitinter"])){
             
+            $intertext=mysqli_real_escape_string($conn,$_POST["intertext"]);
+            date_default_timezone_set("Africa/Lagos");
+            $CurrentTime=time();
+            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+            $DateTime;
+            $Admin=$_SESSION['User_Username'];
+            global $conn;
+            $sql="INSERT INTO transcriptreq(datetime,address,status,type,addedby)
+            VALUES('$DateTime','$intertext','PAYED','INTERNATIONAL','$Image','$Post')";
+            $Execute = mysqli_query($conn,$sql);
+            move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
+            if($Execute){
+            $_SESSION["SuccessMessage"]="Post Added Successfully";
+            redirect("addnewpost.php");
+            }else{
+            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+            redirect("addnewpost.php");
         }
 	
     }
+    elseif (isset($_POST["submitloc"])) {
+            $localtext=mysqli_real_escape_string($conn,$_POST["loctext"]);
+            date_default_timezone_set("Africa/Lagos");
+            $CurrentTime=time();
+            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+            $DateTime;
+            $Admin=$_SESSION['User_Username'];
+            global $conn;
+            $sql="INSERT INTO admin_panel(datetime,title,category,author,image,post)
+            VALUES('$DateTime','$Title','$Category','$Admin','$Image','$Post')";
+            $Execute = mysqli_query($conn,$sql);
+            move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
+            if($Execute){
+            $_SESSION["SuccessMessage"]="Post Added Successfully";
+            redirect("addnewpost.php");
+            }else{
+            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+            redirect("addnewpost.php");
+        }
+    }
+}
 
 ?>
 <!DOCTYPE HTML>
@@ -47,28 +87,7 @@
 <!-- script-for sticky-nav -->
 		<script>
 		$(document).ready(function() {
-                    $("#step2,#step4,#step5").hide();
-                    $("#paybtn").click(function () {
-                        $("#step1").hide(1000, function(){
-                            $("#paybtn").hide(1000, function(){
-                            $("#step2").show(1000, function(){                            
-                                $("#inter").click(function () {
-                                    $("#loc").hide(function () {
-                                    $("#step4").show(1000, function(t){
-                                        t.preventDefault();
-                                });
-                                });
-                                });
-                                 $("#loc").click(function () {
-                                     $("#inter").hide(function () {
-                                      $("#step5").show(1000, function(){
-                                });
-                               });
-                                });
-                            });
-                        });
-                         });
-                    });
+                    
 			 var navoffeset=$(".header-main").offset().top;
 			 $(window).scroll(function(){
 				var scrollpos=$(window).scrollTop(); 
@@ -112,12 +131,12 @@
 
                 </div>
                 <div style="padding: 20px;" id="step4">
-                    <textarea placeholder="Enter International Address here..." class="form-control"></textarea>
+                    <textarea placeholder="Enter International Address here..." class="form-control" name="intertext"></textarea>
                     <input id="submiti" class="btn btn-primary " type="submit" name="submitinter" value="SUBMIT"  />
                     
                 </div>
                 <div style="padding: 20px;" id="step5">
-                    <textarea placeholder="Enter Local Address here..." class="form-control"></textarea>
+                    <textarea placeholder="Enter Local Address here..." class="form-control" name="loctext"></textarea>
                     <input id="submitl" class="btn btn-primary center-block" type="submit" name="submitlocal" value="SUBMIT"  />
 
                 </div>
