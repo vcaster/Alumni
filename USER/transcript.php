@@ -5,7 +5,7 @@
 <?php Confirm_User(); ?>
 <?php 
     if(isset($_POST["pay"])){
-    
+        $payclick = true;    
     date_default_timezone_set("Africa/Lagos");
     $CurrentTime=time();
     //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
@@ -13,7 +13,7 @@
     $DateTime;
     	global $conn;
 	$sql="SELECT * FROM dues WHERE user_id='$userid'";
-        $Execute = mysqli_query($conn,$sql);
+        $Execute = mysqli_query($conn,$sql); 
         
         while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
             
@@ -27,67 +27,89 @@
 	redirect("dues.php");
 	
 	}
-        elseif (isset($_POST["submitinter"])){
-            
-            $intertext=mysqli_real_escape_string($conn,$_POST["intertext"]);
-            date_default_timezone_set("Africa/Lagos");
-            $CurrentTime=time();
-            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
-            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
-            $DateTime;
-            $Admin=$_SESSION['User_Username'];
-            global $conn;
-            $sql="INSERT INTO transcriptreq(datetime,address,status,type,addedby)
-            VALUES('$DateTime','$intertext','PAYED','INTERNATIONAL','$Image','$Post')";
-            $Execute = mysqli_query($conn,$sql);
-            move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
-            if($Execute){
-            $_SESSION["SuccessMessage"]="Post Added Successfully";
-            redirect("addnewpost.php");
-            }else{
-            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
-            redirect("addnewpost.php");
-        }
-	
-    }
-    elseif (isset($_POST["submitloc"])) {
-            $localtext=mysqli_real_escape_string($conn,$_POST["loctext"]);
-            date_default_timezone_set("Africa/Lagos");
-            $CurrentTime=time();
-            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
-            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
-            $DateTime;
-            $Admin=$_SESSION['User_Username'];
-            global $conn;
-            $sql="INSERT INTO admin_panel(datetime,title,category,author,image,post)
-            VALUES('$DateTime','$Title','$Category','$Admin','$Image','$Post')";
-            $Execute = mysqli_query($conn,$sql);
-            move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
-            if($Execute){
-            $_SESSION["SuccessMessage"]="Post Added Successfully";
-            redirect("addnewpost.php");
-            }else{
-            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
-            redirect("addnewpost.php");
-        }
-    }
+        
 }
 
 ?>
+
 <!DOCTYPE HTML>
 <html>
 <?php include("head.php") ?>
+    
 <body>	
-<div class="page-container">	
-   <div class="left-content">
-	   <div class="mother-grid-inner">
-            <!--header start here-->
-		<?php include("headermain.php") ?>
-<!--heder end here-->
-<!-- script-for sticky-nav -->
-		<script>
+    <script>
 		$(document).ready(function() {
                     
+                    $("#step2,#step4,#step5").hide();
+                    $("#paybtn").click(function (e) {
+                        e.preventDefault();
+                        $("#step1").hide(1000, function(){
+                            $("#paybtn").hide(1000, function(){
+                            $("#step2").show(1000, function(){                            
+                                $("#inter").click(function (r) {
+//                                    alert('hey');
+                                    r.preventDefault();
+                                    $("#loc").hide(function () {
+                                    $("#step4").show(1000, function(){
+//                                 
+                                        $("#submiti").click(function (p) {
+                                            //alert('hey');
+                                            p.preventDefault(); 
+                                            
+                                            var address = $('#Intertext').val();
+                                            
+                                            $.post("keyin1.php", {address : address}, function (results){
+                            
+                               //$('#loader','#loader_text').hide();
+                                $('#message').html(results);
+    
+    
+                            });
+//                            $.ajax({ 
+//                     
+//                    method: "POST",
+//                    url: "keyin1.php",
+//
+//                    data: {"address": address}
+//
+//                   }).done(function( data ) { 
+//                      var result = $.parseJSON(data); 
+//
+//                      var str = '';
+//
+//                      if(result == 1) {
+//                        
+//                        str = 'Transcript request Successful.';
+//                        
+//
+//                      }else{
+//                        str = 'Transcript request failed'; 
+//                      }
+//
+//                    $("#message").html(str);
+//                                           
+//                                        
+//                                });
+                                });
+                                 $("#submitl").click(function () {
+                                     
+                                 }); 
+                                });      
+                               
+                                });
+                                 $("#loc").click(function (w) {
+                                     w.preventDefault();
+                                     $("#inter").hide(function () {
+                                      $("#step5").show(1000, function(){
+                                });
+                               });
+                                });
+                            });
+                        });
+                         });
+                    });
+                    });
+                                  
 			 var navoffeset=$(".header-main").offset().top;
 			 $(window).scroll(function(){
 				var scrollpos=$(window).scrollTop(); 
@@ -100,6 +122,14 @@
 			 
 		});
 		</script>
+<div class="page-container">	
+   <div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+		<?php include("headermain.php") ?>
+<!--heder end here-->
+<!-- script-for sticky-nav -->
+		
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
 <div class="inner-block">
@@ -107,12 +137,14 @@
     	<div><?php echo Message();
                    echo SuccessMessage();
                 ?></div>
+        <div id="message"></div>
         <div class="col-md-8">
                           
                 <div class="typo-wells">
                 <div class="wells">
+                    <form action="transcript.php" method="POST">
                     <h1 style="color: #FC8213; font-weight: bold;">Request for transcript</h1>
-                    <div id="step1">
+                    <div id="step1" >
                     <p class="description" style="font-size: 20px; padding: 10px; ">Guidelines for sending transcript</p>
                 <div class="list-group">
                     <a class="list-group-item">Student must pay alumni dues</a>
@@ -121,21 +153,21 @@
 
                 </div>
                     </div>
-                    <form action="transcript.php" method="POST">
+                    
                     <input id="paybtn" class="btn btn-secondary center-block" type="submit" value="CLICK HERE TO PAY" name="pay" />
                     
                     <div style="padding: 20px;" id="step2">
-                   
+                
                 <input id="inter" class="btn btn-success " type="submit" value="INTERNATIONAL" name="inter" />
                 <input id="loc" class="btn btn-warning " type="submit" value="LOCAL" name="loc" />
 
                 </div>
-                <div style="padding: 20px;" id="step4">
-                    <textarea placeholder="Enter International Address here..." class="form-control" name="intertext"></textarea>
+                <div  id="step4">
+                    <textarea   placeholder="Enter International Address here..." class="form-control" id="Intertext" name="intertext" ></textarea>
                     <input id="submiti" class="btn btn-primary " type="submit" name="submitinter" value="SUBMIT"  />
                     
                 </div>
-                <div style="padding: 20px;" id="step5">
+                <div  id="step5">
                     <textarea placeholder="Enter Local Address here..." class="form-control" name="loctext"></textarea>
                     <input id="submitl" class="btn btn-primary center-block" type="submit" name="submitlocal" value="SUBMIT"  />
 

@@ -28,6 +28,54 @@
                 }
             }
             ?>
+ <?php 
+    if(isset($_POST["Submit1"])){
+                
+                $Surname=mysqli_real_escape_string($conn,$_POST["Surname"]);
+                $Firstname=mysqli_real_escape_string($conn,$_POST["Firstname"]);
+                $Middlename=mysqli_real_escape_string($conn,$_POST["Middlename"]);
+                $Email=mysqli_real_escape_string($conn,$_POST["Email"]);
+                $Address=mysqli_real_escape_string($conn,$_POST["Address"]);
+                $Matric=mysqli_real_escape_string($conn,$_POST["Matric"]);
+
+                date_default_timezone_set("Africa/Lagos");
+                $CurrentTime=time();
+                //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+                $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+                $DateTime;
+                $Admin=$_SESSION['User_Username'];
+
+                if(empty($Surname) || empty($Firstname) || empty($Middlename) || empty($Email) || empty($Address) || empty($Matric)){
+                        $_SESSION["ErrorMessage"]="some fields are empty";
+                        redirect("profile.php");
+
+                }elseif(strlen($Email)<2){
+                        $_SESSION["ErrorMessage"]="Title Should be at-least 2 Characters";
+                        redirect("profile.php");
+
+                }else{ 
+                        global $conn;
+
+                        $sql="UPDATE info SET surname = '$Surname' , firstname = '$Firstname' , middlename = '$Middlename', email = '$Email', address = '$Address', matric = '$Matric' WHERE id = '$userid' ";
+                        $Execute = mysqli_query($conn,$sql);
+                        if($Execute){
+                        $_SESSION["SuccessMessage"]="Alumni Updated Successfully";
+                        redirect("profile.php");
+                        }else{
+                        $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+                        redirect("profile.php");
+
+                        }
+
+                    }
+                    
+                    //redirect("icons.php");
+
+                }
+
+
+
+?>
 
 <!DOCTYPE HTML>
 <html>
@@ -212,7 +260,6 @@
                                         </div>	
                                     </a>
                                     <ul class="dropdown-menu drp-mnu">
-                                            <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
                                             <li> <a href="profile.php"><i class="fa fa-user"></i> Profile</a> </li> 
                                         <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a> </li>
                                     </ul>
@@ -244,7 +291,7 @@
 <div class="inner-block">
     <div class="cols-grids panel-widget">
     	
-        <div class="col-md-8">
+        <div class="col-md-3">
             <div><?php echo Message();
                    echo SuccessMessage();
                 ?></div>
@@ -275,7 +322,7 @@
                                               echo "icon1.png";} ?>" width="200" height="200" alt="" >
                        <div class="caption">
                         <br>
-			<h3 id="heading"> Update Profile Picture</h3>
+			<h4 id="heading"> Update Profile Picture</h4>
                        
                   <form action="profile.php" method="post" enctype="multipart/form-data">
                     <fieldset>
@@ -302,8 +349,75 @@
 	</div>
                         
             </div>
-        
+                <div class="col-md-9">
+                    <div class="typo-wells">
+                        <div class="cols-grids panel-widget">
+    	<h2>Update Profile</h2>
+        <div></div>
+        <?php 
+            
+//            $update_record = $_GET['updateid'];   
+         
+            global $conn;
+            $sql9="SELECT * FROM info WHERE id='$userid'";
+            $Execute1 = mysqli_query($conn,$sql9);
+
+while($DataRows = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){             
+	$Id=$DataRows["id"];
+	$Surname=$DataRows["surname"];
+	$Firstname=$DataRows["firstname"];
+	$Middlename=$DataRows["middlename"];
+	$Email=$DataRows["email"];
+	$Address=$DataRows["address"];
+	$Matric=$DataRows["matric"];
+
+
+}   
+        ?>
+          <div>
+            <form action="profile.php" method="post">
+                                  <fieldset>
+                    <div class="form-group">
+                    <label for="surname"><span class="FieldInfo">Surname:</span></label>
+                    <input disabled  class="form-control" type="text" name="Surname" id="surname" value="<?php echo $Surname; ?>" placeholder="Surname...">
+                    </div>
+                     <div  class="form-group">
+                    <label   for="fistname"><span class="FieldInfo">Firstname:</span></label>
+                    <input disabled  class="form-control" type="text" name="Firstname" id="firstname" value="<?php echo $Firstname; ?>" placeholder="First name...">
+                    </div>
+                        <div class="form-group">
+                    <label for="middlename"><span class="FieldInfo">Middlename:</span></label>
+                    <input disabled   class="form-control" type="text" name="Middlename" id="middlename" value="<?php echo $Middlename; ?>" placeholder="Middle name...">
+                    </div>
+                        <div class="form-group">
+                    <label for="email"><span class="FieldInfo">Email:</span></label>
+                    <input  class="form-control" type="email" name="Email" id="email" value="<?php echo $Email; ?>" placeholder="Email...">
+                    </div>
+                        <div class="form-group">
+                    <label for="address"><span class="FieldInfo">Address:</span></label>
+                    <input  class="form-control" type="text" name="Address" id="address" value="<?php echo $Address; ?>" placeholder="Adresss...">
+                    </div>
+                        <div class="form-group">
+                    <label for="matric"><span class="FieldInfo">Matric:</span></label>
+                    <input disabled  class="form-control" type="text" name="Matric" id="matric" value="<?php echo $Matric; ?>" placeholder="Matric No...">
+                    </div>
+
+                   <input class="btn btn-primary" type="Submit" name="Submit1" value="Update Profile"> 
+
+                    </fieldset>
+                    <br>
+            </form>
+                        
+             </div>
 	 </div>	
+        <br>
+<br>
+<br>
+<br>
+<br>
+</div>
+</div>
+</div>
 </div>
 </div>
 <!--inner block end here-->
@@ -342,6 +456,7 @@ $(".sidebar-icon").click(function() {
 <script src="js/bootstrap.js"> </script>
 <!-- mother grid end here-->
 <?php include("copyright.php") ?>
+
 </body>
 </html>
 

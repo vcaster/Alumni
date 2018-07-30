@@ -199,4 +199,139 @@ $("#step2,#step4,#step5").hide();
                         });
                          });
                     });
-              
+                    
+                    
+                    
+                    
+                    
+                    elseif (isset($_POST["submitinter"])){
+            
+            $intertext=mysqli_real_escape_string($conn,$_POST["intertext"]);
+            date_default_timezone_set("Africa/Lagos");
+            $CurrentTime=time();
+            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+            $DateTime;
+            $Admin=$_SESSION['User_Username'];
+            $matric= $_SESSION['matric'];
+            global $conn;
+            $sql="INSERT INTO transcriptsreq(datetime,address,status,type,addedby)
+            VALUES('$DateTime','$intertext','PAYED','INTERNATIONAL','$matric')";
+            $Execute = mysqli_query($conn,$sql);
+            if($Execute){
+            $_SESSION["SuccessMessage"]="Post Added Successfully";
+            redirect("addnewpost.php");
+            }else{
+            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+            redirect("addnewpost.php");
+        }
+	
+    }
+    elseif (isset($_POST["submitloc"])) {
+            $localtext=mysqli_real_escape_string($conn,$_POST["loctext"]);
+            date_default_timezone_set("Africa/Lagos");
+            $CurrentTime=time();
+            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+            $DateTime;
+            $Admin=$_SESSION['User_Username'];
+            global $conn;
+            $sql="INSERT INTO transcriptsreq(datetime,address,status,type,addedby)
+            VALUES('$DateTime','$intertext','PAYED','INTERNATIONAL','$matric')";
+            $Execute = mysqli_query($conn,$sql);
+            if($Execute){
+            $_SESSION["SuccessMessage"]="Transcript Submitted Successfully";
+            redirect("transcript.php");
+            }else{
+            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+            redirect("transcript.php");
+        }
+    }
+    
+    
+    
+    
+    
+                  
+    
+    
+    
+<?php 
+    if(isset($_POST["pay"])){
+        $payclick = true;    
+    date_default_timezone_set("Africa/Lagos");
+    $CurrentTime=time();
+    //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+    $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+    $DateTime;
+    	global $conn;
+	$sql="SELECT * FROM dues WHERE user_id='$userid'";
+        $Execute = mysqli_query($conn,$sql);
+        
+        while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
+            
+            $status = $DataRows['status'];
+        }
+        
+	
+	if($status != 'PAYED'){
+            
+            $_SESSION["ErrorMessage"]="Pay Dues first";
+	redirect("dues.php");
+	
+	}
+        elseif (isset($_POST["inter"])){
+            $interclick = true;
+            if (isset($_POST["submitinter"])){
+                
+            $intersubclick = true;            
+            $intertext=mysqli_real_escape_string($conn,$_POST["intertext"]);
+            date_default_timezone_set("Africa/Lagos");
+            $CurrentTime=time();
+            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+            $DateTime;
+            $Admin=$_SESSION['User_Username'];
+            $matric= $_SESSION['matric'];
+            global $conn;
+            $sql="INSERT INTO transcriptsreq(datetime,address,status,type,addedby)
+            VALUES('$DateTime','$intertext','PAYED','INTERNATIONAL','$matric')";
+            $Execute = mysqli_query($conn,$sql);
+            if($Execute){
+            $_SESSION["SuccessMessage"]="Post Added Successfully";
+            redirect("addnewpost.php");
+            }else{
+            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+            redirect("addnewpost.php");
+            }
+        }
+	
+    }
+    elseif (isset($_POST["submitloc"])) {
+        $locclick = true;
+        if (isset($_POST["submitinter"])){
+                
+            $locsubclick = true;     
+            $localtext=mysqli_real_escape_string($conn,$_POST["loctext"]);
+            date_default_timezone_set("Africa/Lagos");
+            $CurrentTime=time();
+            //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+            $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+            $DateTime;
+            $Admin=$_SESSION['User_Username'];
+            global $conn;
+            $sql="INSERT INTO transcriptsreq(datetime,address,status,type,addedby)
+            VALUES('$DateTime','$intertext','PAYED','INTERNATIONAL','$matric')";
+            $Execute = mysqli_query($conn,$sql);
+            if($Execute){
+            $_SESSION["SuccessMessage"]="Transcript Submitted Successfully";
+            redirect("transcript.php");
+            }else{
+            $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+            redirect("transcript.php");
+            }
+        }
+    }
+}
+
+?>

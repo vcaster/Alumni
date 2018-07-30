@@ -5,6 +5,12 @@
 <?php 
     if(isset($_POST["Submit"])){
 $Title=mysqli_real_escape_string($conn,$_POST["Title"]);
+
+if(empty($title)){
+    
+    
+    
+}
 date_default_timezone_set("Africa/Lagos");
 $CurrentTime=time();
 //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);

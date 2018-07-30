@@ -4,7 +4,16 @@
 <?php Confirm_Login();?>
 <?php Confirm_Admin(); ?>
 <?php 
-    global $conn;
+  global $conn;
+$today_date = date('Y-m-d');
+$query_date = "SELECT is_visit from site_visits WHERE dated = '$today_date'";
+$Executer = mysqli_query($conn,$query_date);
+                while($DataRow=mysqli_fetch_array($Executer,MYSQLI_ASSOC)){
+                        
+                        $dailyvisits=$DataRow['is_visit'];
+                }
+                $Dailyv=$dailyvisits;
+  
     
     $alumnicat = 1;
     $sql2="SELECT * FROM info WHERE category = '$alumnicat' ORDER BY id desc";
@@ -295,7 +304,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </div>	
                                     </a>
                                     <ul class="dropdown-menu drp-mnu">
-                                            <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
                                             <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> 
                                         <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a> </li>
                                     </ul>
@@ -347,7 +355,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="col-md-4 market-update-gd">
 				<div class="market-update-block clr-block-2">
 				 <div class="col-md-8 market-update-left">
-					<h3>0</h3>
+					<h3><?php echo $Dailyv; ?></h3>
 					<h4>Daily Visitors</h4>
 					<!--<p>Other hand, we denounce</p>-->
 				  </div>

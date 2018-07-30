@@ -1,6 +1,50 @@
 <?php require_once('ADMIN/db.php');?>
 <?php require_once("ADMIN/Sessions.php"); ?>
-<?php require_once("ADMIN/Functions.php"); ?>
+<?php require_once("ADMIN/Functions.php"); 
+
+
+//        date_default_timezone_set("Africa/Lagos");
+//        $CurrentTime=time();
+//        $DateTime=strftime("%Y-%m-%d",$CurrentTime);
+//        $DateTime;
+//        echo $DateTime;
+
+$today_date = date('Y-m-d');
+//$today_date = '2018-07-05';
+$re =null;
+
+//echo $today_date;
+$sql="SELECT COUNT(*) FROM site_visits";
+$Executee=mysqli_query($conn,$sql);
+$Rows=mysqli_fetch_array($Executee,MYSQLI_ASSOC);
+$Total=array_shift($Rows);
+                        
+$query_check_date = "SELECT dated FROM site_visits WHERE dated = '$today_date'";
+$Execute = mysqli_query($conn,$query_check_date);
+$DataRows=mysqli_fetch_assoc($Execute);
+//echo "\n {$Total}";
+if($Total == 0){
+    $query = "INSERT INTO site_visits(dated,is_visit) VALUES ('$today_date',1)";
+    $Execute = mysqli_query($conn,$query);
+    if($Execute){
+        echo "1 visit";
+    }
+    else{
+        echo 'failed';
+    }
+}
+
+elseif (!empty($DataRows)){
+
+$query = "UPDATE site_visits SET is_visit = is_visit + 1 WHERE dated = '$today_date'";
+$Execute1 = mysqli_query($conn,$query);
+
+}
+else{
+    $query = "INSERT INTO site_visits (dated,is_visit) VALUES ('$today_date',1)";
+    $Execute = mysqli_query($conn,$query);
+}
+?>
 
 <?php
         global $conn;
@@ -32,6 +76,7 @@
                 $_SESSION['User_bio'] = $seenauser['bio'];
                 $_SESSION['User_Cat'] = $seenuser['category'];
                 $_SESSION['User_id'] = $seenuser['id'];
+                $_SESSION['matric'] = $seenuser['matric'];
                 
                 if ($_SESSION['User_Cat'] == 1){
                     $_SESSION['User_Username'] = "{$seenuser['surname']} {$seenuser['firstname']}";
@@ -223,7 +268,16 @@ $(document).ready(function(){
                     var dept = $('#dept').val();
                     var category = 1;
                     
-                    
+                    if(surname == "" || firstname == ""){
+                        
+                        alert('KIndly complete all fields');
+                        
+                        
+                    }
+        // validation goes here contd...            
+        else{
+                        
+                                            
                      $.ajax({ 
 
                     method: "POST",
@@ -265,6 +319,9 @@ $(document).ready(function(){
 //                            });     
 //                    }); 
                 });
+                
+                /// closing else
+            }
 
                     
 //                    $('#matric_id').keyup(function(){
