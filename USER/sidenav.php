@@ -28,7 +28,7 @@
             </li>
             
              <li><a href="gallery.php"><i class="fa fa-photo"></i><span>Gallery</span></a></li>
-             <li><a href="#"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
+             <li><a href="calendar.php"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
              <li><a href="dues.php"><i class="fa fa-money"></i><span>Pay Dues</span></a></li>
              <li><a href="transcript.php"><i class="fa fa-file-text-o"></i><span>Transcript</span></a></li>
              

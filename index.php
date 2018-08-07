@@ -458,7 +458,7 @@ $(document).ready(function(){
                             <input type="text" name="phoneno" placeholder="Phone number" value="" id="phoneno" >
                             <label class="pull-left" style="margin-left: 5%;">Department:</label>
                             
-                            <select id="dept" style="background-color: #000; color: #fff; opacity: 0.8;  width: 75%; margin: 15px;" class="form-control center-block" >
+                            <select id="dept" style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block" >
          
                                 <option>Accounting</option>
                                 <option>Architecture</option>
@@ -498,7 +498,7 @@ $(document).ready(function(){
                             </select>
                             <label class="pull-left" style="margin-left: 5%;">Graduation Year :</label>
                             
-                            <select id="grad" style="background-color: #000; color: #fff; opacity: 0.8;  width: 75%; margin: 15px;" class="form-control center-block" >
+                            <select  id="grad" style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block" >
                                 <?php $year  = 2010; 
                                             while($year < 2018) 
                                             {
@@ -507,12 +507,46 @@ $(document).ready(function(){
                                   <option><?php echo $year; ?></option>
                                   <?php } ?>
                                 </select>
+                            <label class="pull-left" style="margin-left: 5%;">Date of Birth :</label>
+                            <br>
+                            <label class="pull-left" style="margin-left: 5%;">Day</label>
+                             <label class="pull-left" style="margin-left: 13%;">Month</label>
+                              <label class="pull-left" style="margin-left: 20%;">Year</label>
+                              <br>
+                            <select  id="d" style="background-color: #000; color: #fff; opacity: 0.8;  width: 15%; margin: 15px;" class="pull-left form-control center-block">
+                                <?php $day  = 0; 
+                                            while($day < 31) 
+                                            {
+                                                $day++
+                                               ?>
+                                  <option><?php echo $day; ?></option>
+                                  <?php } ?>
+                            </select>
+                             <select  id="m" style="background-color: #000; color: #fff; opacity: 0.8;  width: 17%; margin: 15px;" class="pull-left form-control center-block">
+                                <?php $mon  = 0; 
+                                            while($mon < 12) 
+                                            {
+                                                $mon++
+                                               ?>
+                                  <option><?php echo $mon; ?></option>
+                                  <?php } ?>
+                            </select>
+                              <select  id="y" style="background-color: #000; color: #fff; opacity: 0.8;  width: 20%; margin: 15px;" class="pull-left form-control center-block">
+                                <?php $yearr  = 1971; 
+                                            while($yearr < 2018) 
+                                            {
+                                                $yearr++
+                                               ?>
+                                  <option><?php echo $yearr; ?></option>
+                                  <?php } ?>
+                            </select>
+
 
 
                                 <input  type="text" name="Matric" id="matric_id" placeholder="Matric No *OPTIONAL*" value="" ><br>
-                                <input class="chk1" type="radio" name="Search" value="Employed" ><span>Employed</span>
-                                <input class="chk2" type="radio" name="Search" value="Employed" ><span>Self Employed</span>
-                                <input class="chk3" type="radio" name="Search" value="Unemployed"><span>Unemployed</span><br><br>
+                                <input class="chk1" type="radio" name="Search" value="Employed" >&nbsp;&nbsp;<span>Employed</span> &nbsp; &nbsp;
+                                <input class="chk2" type="radio" name="Search" value="Employed" ><span>Self Employed</span>&nbsp;&nbsp;
+                                <input class="chk3" type="radio" name="Search" value="Unemployed">&nbsp;&nbsp;<span>Unemployed</span><br><br>
                                 <input type="password" name="password" placeholder="Create Password" value="" id="password">
                                 <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
                                 <br><span id="password_loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="password_text"></span>

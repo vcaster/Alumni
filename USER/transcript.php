@@ -61,7 +61,9 @@
                                             $.post("keyin1.php", {address : address}, function (results){
                             
                                //$('#loader','#loader_text').hide();
+                              // location.reload();
                                 $('#message').html(results);
+                                $("#submiti").attr("disabled", true);
     
     
                             });
@@ -91,20 +93,36 @@
 //                                        
 //                                });
                                 });
-                                 $("#submitl").click(function () {
-                                     
-                                 }); 
+                                  
                                 });      
                                
                                 });
-                                 $("#loc").click(function (w) {
-                                     w.preventDefault();
+                                 
+                            });
+                            $("#loc").click(function (u) {
+                                     u.preventDefault();
                                      $("#inter").hide(function () {
                                       $("#step5").show(1000, function(){
+                                          $("#submitl").click(function (v) {
+                                              
+                                              v.preventDefault(); 
+                                            
+                                            var address = $('#Loctext').val();
+                                            
+                                            $.post("keyin2.php", {address : address}, function (results){
+                            
+                               //$('#loader','#loader_text').hide();
+                             //  location.reload();
+                                $('#message').html(results);
+                                $("#submitl").attr("disabled", true);
+    
+    
+                            });
+                                     
+                                 });
                                 });
                                });
                                 });
-                            });
                         });
                          });
                     });
@@ -163,13 +181,13 @@
 
                 </div>
                 <div  id="step4">
-                    <textarea   placeholder="Enter International Address here..." class="form-control" id="Intertext" name="intertext" ></textarea>
-                    <input id="submiti" class="btn btn-primary " type="submit" name="submitinter" value="SUBMIT"  />
+                    <textarea style="margin: 10px;"   placeholder="Enter International Address here..." class="form-control" id="Intertext" name="intertext" ></textarea>
+                    <input style="margin: 5px;" id="submiti" class="btn btn-primary " type="submit" name="submitinter" value="SUBMIT"  />
                     
                 </div>
                 <div  id="step5">
-                    <textarea placeholder="Enter Local Address here..." class="form-control" name="loctext"></textarea>
-                    <input id="submitl" class="btn btn-primary center-block" type="submit" name="submitlocal" value="SUBMIT"  />
+                    <textarea style="margin: 10px;" placeholder="Enter Local Address here..." class="form-control" id="Loctext" name="loctext"></textarea>
+                    <input style="margin: 5px;" id="submitl" class="btn btn-primary" type="submit" name="submitlocal" value="SUBMIT"  />
 
                 </div>
                 </form>

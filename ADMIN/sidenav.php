@@ -34,7 +34,7 @@
                     </i><span>Comments</span></a></li>
                     <li><a href="admins.php"><i class="fa fa-users"></i><span>Manage Admin's</span></a></li>
              <li><a href="galleryadmin.php"><i class="fa fa-photo"></i><span>Gallery</span></a></li>
-            <li><a href="#"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
+             <li><a href="calendaradmin.php"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
              
 <!--            <li id="menu-academico" ><a href="#"><i class="fa fa-file-text"></i><span>Pages</span><span class="fa fa-angle-right" style="float: right"></span></a>
               <ul id="menu-academico-sub" >
