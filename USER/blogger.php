@@ -54,9 +54,16 @@
 <!--heder end here-->
 <!-- script-for sticky-nav -->
 		<script>
+                    var start = 0;
+                    var limit = 5;
+                    var reachedMax = false;
 		$(document).ready(function() {
 			 var navoffeset=$(".header-main").offset().top;
 			 $(window).scroll(function(){
+                             if ($(window).scrollTop() == $(document).height() - $(window).height())
+                             {
+                                getData(); 
+                             }
 				var scrollpos=$(window).scrollTop(); 
 				if(scrollpos >=navoffeset){
 					$(".header-main").addClass("fixed");
@@ -64,8 +71,37 @@
 					$(".header-main").removeClass("fixed");
 				}
 			 });
+                         getData();
+                         
 			 
 		});
+                
+                function getData(){
+                    if (reachedMax)
+                        return;
+                    
+                    $.ajax({
+                        url: 'data.php',
+                        method: 'POST',
+                        dataType: 'text',
+                        data:{
+                            getData: 1,
+                            start: start,
+                            limit: limit
+                        },
+                        success: function (response){
+                            if (response == 'reachedMax'){
+                                reachedMax = true;
+                            }
+                            else{
+                                start += limit;
+                                $(".result").append(response);
+                            }
+                        }
+                        
+                    })
+                                      
+                }
 		</script>
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
@@ -82,42 +118,14 @@
                     $Search = $_GET['Searchbox'];
                     $sql5="SELECT * FROM admin_panel WHERE datetime LIKE '%$Search%' OR title LIKE '%$Search%' OR category LIKE '%$Search%' OR post LIKE '%$Search%' ";
                     
-                }else{
-                $sql5="SELECT * FROM admin_panel ORDER BY id desc";}
-                $Execute = mysqli_query($conn,$sql5);
-                while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
-                        $PostId=$DataRows["id"];
-			$DateTime=$DataRows["datetime"];
-			$Title=$DataRows["title"];
-			$Category=$DataRows["category"];
-			$Admin=$DataRows["author"];
-			$Image=$DataRows["image"];
-			$Post=$DataRows["post"];                        
-                ?>
-         <div class="typo-wells">
-         
-
-                   <div class="well">
-                       
-                       <img class="img-responsive img-rounded" src="../ADMIN/Uploaded/<?php echo $Image;  ?>" >
-                       <div class="caption">
-                        <br>
-			<h1 id="heading"> <?php echo htmlentities($Title); ?></h1>
-                        
-                        <p class="description">Category:<?php echo htmlentities($Category); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Posted on:
-                        <?php echo htmlentities($DateTime);?></p>
-                        <p style='padding: 3px; width: 100%; word-break: break-all; word-wrap: break-word;'><?php
-                        if(strlen($Post)>150){$Post=substr($Post,0,150).'...';}
-                        echo $Post; ?></p>
-                        </div>
-                       
-                        <a href="fullpost.php?id=<?php echo $PostId; ?>"><span class="btn btn-info bb">
-                                Read More &rsaquo;&rsaquo;
-                        </span></a>
-                   </div>
+                }
+                ?>                     
+                
+         <div class="typo-wells result">
+                          
            
 	</div>
-              <?php } ?>
+         
             </div>
         <div class="col-md-4">
             <div class="typo-wells">

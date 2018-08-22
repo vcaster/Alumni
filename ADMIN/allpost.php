@@ -4,18 +4,7 @@
 <?php Confirm_Login();?>
 <?php Confirm_Admin(); ?>
 <?php 
-  global $conn;
-  $dailyvisits = 0;
-$today_date = date('Y-m-d');
-$query_date = "SELECT is_visit from site_visits WHERE dated = '$today_date'";
-$Executer = mysqli_query($conn,$query_date);
-                while($DataRow=mysqli_fetch_array($Executer,MYSQLI_ASSOC)){
-                        
-                        $dailyvisits=$DataRow['is_visit'];
-                }
-                
-                $Dailyv=$dailyvisits;
-  
+    global $conn;
     
     $alumnicat = 1;
     $sql2="SELECT * FROM info WHERE category = '$alumnicat' ORDER BY id desc";
@@ -26,14 +15,12 @@ $Executer = mysqli_query($conn,$query_date);
                         $totalum++;
                 }
                 $Totalalumni = $totalum;
-//                echo $_SESSION['User_Cat'];
 
  ?>
 <!DOCTYPE HTML>
 <html>
 <head>
 <title>Admin Panel</title>
-<link rel="icon" href="../Caleb.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Caleb University Alumni, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -47,14 +34,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/jquery-3.3.1.min.js"></script> 
 <!--icons-css-->
 <link href="css/font-awesome.css" rel="stylesheet"> 
-<!-- convert table files-->
-<script type="text/javascript" src="../tableExport/tableExport.js"></script>
-<script type="text/javascript" src="../tableExport/jquery.base64.js"></script>
-<script type="text/javascript" src="../tableExport/html2canvas.js"></script>
-<script type="text/javascript" src="../tableExport/jspdf/jspdf.js"></script>
-<script type="text/javascript" src="../tableExport/jspdf/libs/sprintf.js"></script>
-<script type="text/javascript" src="../tableExport/jspdf/libs/base64.js"></script>
-
 <!--Google Fonts-->
 <link href='//fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Work+Sans:400,500,600' rel='stylesheet' type='text/css'>
@@ -164,7 +143,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="clearfix"> </div>
             </div>
                  <div class="header-right">
-                    <!--<div class="profile_details_left"><!--notifications of menu start --
+                    <div class="profile_details_left"><!--notifications of menu start -->
                         <ul class="nofitications-dropdown">
                         <li class="dropdown head-dpdn">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">3</span></a>
@@ -297,14 +276,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </li>	
                         </ul>
                             <div class="clearfix"> </div>
-                    </div>-->
+                    </div>
                         <!--notification menu end -->
                         <div class="profile_details">		
                             <ul>
                             <li class="dropdown profile_details_drop">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         <div class="profile_img">	
-                                            <span class="prfil-img"><img class="img-circle img-responsive" src="images/icon1.png" alt="" width="50" height="50"> </span> 
+                                                <span class="prfil-img"><img src="images/p1.png" alt="" width="50" height="50"> </span> 
                                                 <div class="user-name">
                                                         <p><?php echo $_SESSION['User_Username']; ?></p>
                                                         <span>Administrator</span>
@@ -315,7 +294,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </div>	
                                     </a>
                                     <ul class="dropdown-menu drp-mnu">
-                                           <!-- <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> -->
+                                            <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> 
                                         <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a> </li>
                                     </ul>
                             </li>
@@ -339,13 +318,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				}
 			 });
 			 
-                         
-                     $("#excel").click(function(ex){
-                        $("#alum").tableExport({ 
-                            type: 'excel',
-                            escape: 'false',
-                     });                     
-                    });
 		});
 		</script>
 		<!-- /script-for sticky-nav -->
@@ -355,49 +327,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                    echo SuccessMessage();
                 ?></div>
 <!--market updates updates-->
-	 <div class="market-updates">
-             <a href="alumins.php" ><div class="col-md-4 market-update-gd">
-				<div class="market-update-block clr-block-1">
-					<div class="col-md-8 market-update-left">
-						<h3><?php echo $Totalalumni; ?></h3>
-						<h4>Registered Alumni</h4>
-<!--						<p>Other hand, we denounce</p>-->
-					</div>
-					<div class="col-md-4 market-update-right">
-						<i class="fa fa-file-text-o"> </i>
-					</div>
-				  <div class="clearfix"> </div>
-				</div>
-			</div>
-             </a>
-			<div class="col-md-4 market-update-gd">
-				<div class="market-update-block clr-block-2">
-				 <div class="col-md-8 market-update-left">
-					<h3><?php echo $Dailyv; ?></h3>
-					<h4>Daily Visitors</h4>
-					<!--<p>Other hand, we denounce</p>-->
-				  </div>
-					<div class="col-md-4 market-update-right">
-						<i class="fa fa-eye"> </i>
-					</div>
-				  <div class="clearfix"> </div>
-				</div>
-			</div>
-			<div class="col-md-4 market-update-gd">
-				<div class="market-update-block clr-block-3">
-					<div class="col-md-8 market-update-left">
-						<h3>0</h3>
-						<h4>New Messages</h4>
-						<!--<p>Other hand, we denounce</p>-->
-					</div>
-					<div class="col-md-4 market-update-right">
-						<i class="fa fa-envelope-o"> </i>
-					</div>
-				  <div class="clearfix"> </div>
-				</div>
-			</div>
-		   <div class="clearfix"> </div>
-		</div>
+	
 <!--market updates end here-->
 <!--mainpage chit-chating-->
 <?php
@@ -405,7 +335,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 if (isset($_GET['Search']))
                 {
                 $Search = $_GET['Searchbox'];
-                $sql = "SELECT * FROM info WHERE  surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%' ";
+                $sql = "SELECT * FROM info WHERE surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%' ";
                 $SrNo=0;
                 $Execute = mysqli_query($conn,$sql);
                 
@@ -423,9 +353,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 if ($SrNo > 0){
                 
                 $Showdiv=true;
-                if($Category == 0){
-                    $Showopt=false;
-                }
             }else{
                 $Showdiv=false;
                 echo "<br><div class=\"alert alert-danger\"> NOT FOUND </div>";
@@ -453,13 +380,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<th>Firstname</th>
 			<th>Middlename</th>
 			<th>E-mail</th>
+			<th>Address</th>
 			<th>Matric</th>
-                        <th>Address</th>
-			<th>Phone no</th>
-                        <th>Department</th>
-                        <th>Graduation year</th>
-                        
-                        <!--<th>User type</th>-->
+			<th>User type</th>
 <!--			<th>Details</th>-->
 			
 		</tr>
@@ -468,7 +391,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 if (isset($_GET['Search']))
                 {
                 $Search = $_GET['Searchbox'];
-                $sql = "SELECT * FROM info WHERE  surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%' OR department LIKE '%$Search%' OR gradyear LIKE '%$Search%' OR phoneno LIKE '%$Search%' ";
+                $sql = "SELECT * FROM info WHERE  surname LIKE '%$Search%' OR firstname LIKE '%$Search%' OR middlename LIKE '%$Search%' OR email LIKE '%$Search%' OR matric LIKE '%$Search%'";
                 $SrNo=0;
                 $Execute = mysqli_query($conn,$sql);
                 
@@ -481,10 +404,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         $Address=$DataRows["address"];
                         $Matric=$DataRows["matric"];
                         $Category=$DataRows["category"];
-                        $phoneno=$DataRows["phoneno"];
-                        $dept=$DataRows["department"];
-                        $grad=$DataRows["gradyear"];
-                        
                         $SrNo++;
                 ?>
         <tr>
@@ -499,23 +418,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     if(strlen($Address) > 6) {$Address = substr($Address,0,6).'...';} echo $Address;
                     ?></td>
             <td><?php echo $Matric; ?></td>
-            <td><?php echo $phoneno; ?></td>
-            <td><?php echo $dept; ?></td>
-            <td><?php echo $grad; ?></td>
-            <td <?php global $Showopt;  if ($Showopt == false){ ?> style="display:none"  > <?php } ?>
-            <!--<td>-->
-                <a href="updatealumni.php?updateid=<?php echo $Id; ?>"><span class="btn btn-success"><span class="fa fa-plus"></span></span></a> 
+            <td><a href="updatealumni.php?updateid=<?php echo $Id; ?>"><span class="btn btn-success"><span class="fa fa-plus"></span></span></a> 
                 <a href="deletealumni.php?deletealumniid=<?php echo $Id; ?>"><span class="btn btn-danger"><span class="fa fa-close"></span></span></a> 
-           
             </td>            
             <td></td>
             <!--<td></td>-->
-        <?php } ?>
+        
 <?php 
+            }
             
-                }
-                
-                ?>    
+                } ?>    
                         </table>
                   </div>
              </div>
@@ -527,7 +439,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
      
 </div>
 
-<div class="chit-chat-layer1" >
+<div class="chit-chat-layer1">
 	<div class="col-md-12 chit-chat-layer1-left">
                <div class="work-progres">
                             <div class="chit-chat-heading">
@@ -549,7 +461,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</tr>
 <?php
 $conn;
-$sql9="SELECT * FROM admin_panel ORDER BY id desc LIMIT 0,5;";
+$sql9="SELECT * FROM admin_panel ORDER BY id desc;";
 $Execute1 = mysqli_query($conn,$sql9);
 $SrNo=0;
 while($DataRows=mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
@@ -611,78 +523,7 @@ while($DataRows=mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
             
 <?php } ?>        
                       </table>
-                                <div>
-                                    <a href="allpost.php"><span style="margin-left: 83%; margin-top:0%" class="btn btn-primary"> View All </span></a>
-                                </div>
-                  </div>
-             </div>
-      </div>
-    
-    <div class="clearfix"> </div>
-       
-     
-     
-</div>
-<div class="chit-chat-layer1">
-	<div class="col-md-12 chit-chat-layer1-left">
-               <div class="work-progres">
-                            <div class="chit-chat-heading">
-                                  Alumni
-                            </div>
-                            <div class="table-responsive">
-                                <table id="alum" class="table table-striped table-hover">
-		<tr>
-			<th>S/N</th>
-			<th>Surname</th>
-			<th>Firstname</th>
-			<th>Middlename</th>
-			<th>E-mail</th>
-			<th>Address</th>
-			<th>Matric</th>
-			<th>Action</th>
-			<th>Details</th>
-			
-		</tr>
-<?php
-$conn;
-$sql9="SELECT * FROM info WHERE category = '1' ORDER BY id desc LIMIT 0,5;";
-$Execute1 = mysqli_query($conn,$sql9);
-$SrNo=0;
-while($DataRows=mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
-	$Id=$DataRows["id"];
-	$Surname=$DataRows["surname"];
-	$Firstname=$DataRows["firstname"];
-	$Middlename=$DataRows["middlename"];
-	$Email=$DataRows["email"];
-	$Address=$DataRows["address"];
-	$Matric=$DataRows["matric"];
-        $Category=$DataRows["category"];
-	$SrNo++;
-	?>
-	<tr>
-            <td><?php echo $SrNo; ?></td>
-            <td><?php echo $Surname; ?></td>
-            <td><?php echo $Firstname; ?></td>
-            <td><?php echo $Middlename; ?></td>
-            <td><?php 
-                    if(strlen($Email) > 6) {$Email = substr($Email,0,6).'...';} echo $Email;
-                    ?></td>
-            <td><?php 
-                    if(strlen($Address) > 6) {$Address = substr($Address,0,6).'...';} echo $Address;
-                    ?></td>
-            <td><?php echo $Matric; ?></td>
-            <td><a href="updatealumni.php?updateid=<?php echo $Id; ?>"><span class="btn btn-success"><span class="fa fa-plus"></span></span></a> 
-                <a href="deletealumni.php?deletealumniid=<?php echo $Id; ?>"><span class="btn btn-danger"><span class="fa fa-close"></span></span></a> 
-            </td>            
-            <td></td>
-        
-<?php } ?>        
-                      </table>
-                                <div>
-                                    <a href="alumins.php"><span style="margin-left: 7%; margin-top:0%" class="btn btn-primary"> View All </span></a>
-                                    <button style="margin-left: 1%; margin-top:0%" id="excel" class="btn btn-success"> Export to Excel </button>
-                                </div>
-                 
+                              
                   </div>
              </div>
       </div>

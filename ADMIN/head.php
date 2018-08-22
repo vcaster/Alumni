@@ -1,5 +1,6 @@
 <head>
 <title>Admin Panel</title>
+<link rel="icon" href="../Caleb.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Caleb University Alumni, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 

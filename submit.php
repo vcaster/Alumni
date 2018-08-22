@@ -13,8 +13,17 @@
         $phoneno = $_POST['phoneno'];
         $grad = $_POST['grad'];
         $dept = $_POST['dept'];
-                
-        $sql = "INSERT INTO info(surname, firstname, middlename, email, address, matric, phoneno, department, gradyear, password, category) VALUES ('$surname','$firstname','$middlename','$email','$address','$matric', '$phoneno', '$dept', '$grad', '$password', '$category')";
+        $emp = $_POST['emp'];
+        $deg = $_POST['deg'];
+        $occu = $_POST['occu'];
+        $d = $_POST['d'];
+        $m = $_POST['m'];
+        $y = $_POST['y'];
+        
+        
+        
+        $dob = $y.'-'.$m.'-'.$d;       
+        $sql = "INSERT INTO info(surname, firstname, middlename, email, address, matric, DOB, phoneno, department, degree, gradyear, emp_status, occup, password, category) VALUES ('$surname','$firstname','$middlename','$email','$address','$matric', '$dob', '$phoneno', '$dept', '$deg', '$grad', '$emp', '$occu', '$password', '$category')";
         
         $Execute = mysqli_query($conn,$sql);
         

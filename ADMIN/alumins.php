@@ -2,6 +2,7 @@
 <?php require_once("Sessions.php"); ?>
 <?php require_once("Functions.php"); ?>
 <?php Confirm_Login();?>
+<?php Confirm_Admin(); ?>
 <?php 
     global $conn;
     

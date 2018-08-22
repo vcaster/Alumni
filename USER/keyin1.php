@@ -17,8 +17,8 @@
             $Admin=$_SESSION['User_Username'];
             $matric= $_SESSION['matric'];
             global $conn;
-            $sql="INSERT INTO transcriptsreq(datetime,address,status,type,addedby,matric)
-            VALUES('$DateTime','$address','PAYED','INTERNATIONAL','$user','$matric')";
+            $sql="INSERT INTO transcriptsreq(datetime,address,status,type,addedby,matric,category)
+            VALUES('$DateTime','$address','PAYED','INTERNATIONAL','$user','$matric','1')";
             $Execute = mysqli_query($conn,$sql);
         
         if($Execute){

@@ -15,7 +15,7 @@
                     <div class="clearfix"> </div>
             </div>
                  <div class="header-right">
-                    <div class="profile_details_left"><!--notifications of menu start -->
+                    <!--<div class="profile_details_left"><!--notifications of menu start --
                         <ul class="nofitications-dropdown">
                         <li class="dropdown head-dpdn">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">3</span></a>
@@ -148,7 +148,7 @@
                         </li>	
                         </ul>
                             <div class="clearfix"> </div>
-                    </div>
+                    </div>-->
                         <!--notification menu end -->
                         <div class="profile_details">		
                             <ul>
@@ -166,8 +166,8 @@
                                         </div>	
                                     </a>
                                     <ul class="dropdown-menu drp-mnu">
-                                            <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
-                                            <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> 
+                                            <!--<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>
+                                            <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> -->
                                         <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a> </li>
                                     </ul>
                             </li>

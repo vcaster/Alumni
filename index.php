@@ -135,7 +135,7 @@ else{
 <head>
 <title>CALEB UNIVERSITY ALUMNI PORTAL</title>
 
-
+<link rel="icon" href="Caleb.png"/>
 <link href="css/bootstrap3.min.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -162,6 +162,7 @@ $(document).ready(function(){
       
       $('#loader').hide();
       $('#password_loader').hide();
+      $('#occup').hide();
       
       
              	
@@ -216,7 +217,7 @@ $(document).ready(function(){
                             
                                 $('#loader','#loader_text').hide();
                                 $('#loader_text').html(results);
-    
+                                
     
                             });
                         }
@@ -225,6 +226,7 @@ $(document).ready(function(){
         else {
              $('#loader','#loader_text').hide();
              $("#loader_text").html("invalid");
+             
         }
         });
         $('#passwordcon').keyup(function(n){
@@ -247,6 +249,20 @@ $(document).ready(function(){
                     
                     
         });
+        
+        $(function() {
+    
+    $('#emp').change(function(){
+        if($('#emp').val() == 'Employed') {
+            $("#occup").show(1000, function(){});
+        } else {
+            $("#occup").hide(1000, function(){});
+        } 
+    });
+});
+        
+        
+        
 //                        if (regemail.test(name)) {
 //                        $('#loader','#loader_text').hide();
 //                            $("#loader_text").html("invalid");                                                       
@@ -255,7 +271,9 @@ $(document).ready(function(){
                 
                 $(".btn2").click(function(e){
                     e.preventDefault();
-                    
+                    var regemail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+                    var regno = /^[0-9]{11}/;
+                    var regmatric = /^[0-9]{2}\/[0-9]{4}/;
                     var surname = $('#Surname').val();
                     var firstname= $('#Firstname').val();
                     var middlename = $('#Middlename').val();
@@ -266,16 +284,56 @@ $(document).ready(function(){
                     var phoneno = $('#phoneno').val();
                     var grad = $('#grad').val();
                     var dept = $('#dept').val();
+                    var emp = $('#emp').val();
+                    var occu = $('#occu').val();
+                    var deg = $('#deg').val();
+                    var d = $('#d').val();
+                    var m = $('#m').val();
+                    var y = $('#y').val();
                     var category = 1;
                     
-                    if(surname == "" || firstname == ""){
+                    if(surname == ""){
                         
-                        alert('KIndly complete all fields');
-                        
+                        alert('Fill in your Surname');                        
                         
                     }
+//                    else if (firstname == ""){
+//                        alert('Fill in your Firstname');                        
+//                    }
+//                    else if (middlename =="")
+//                    {
+//                        alert('Fill in your Middlename');
+//                    }
+//                    else if(!email.match(regemail)) 
+//                    {
+//                        alert('Email is invalid');
+//                    }
+//                    else if (address == '')
+//                    {   
+//                        alert('Fill in your address');
+//                    }
+//                    else if (!phoneno.match(regno))
+//                    {
+//                        alert('Phone number is invalid');
+//                    }
+//                    else if (!matric.match(regmatric))
+//                    {
+//                        alert('Matric number is invalid');
+//                    }
+//                    else if(emp == 'Employed' && occu == "" )
+//                    {
+//                        alert('Fill in your occupation');
+//                                               
+//                    }
+                    
         // validation goes here contd...            
         else{
+                $.post("dob.php", {m:m , d:d, surname:surname, firstname:firstname}, function (results){
+                            
+                                $('#messagecc').html(results);
+                                
+    
+                            });
                         
                                             
                      $.ajax({ 
@@ -283,7 +341,7 @@ $(document).ready(function(){
                     method: "POST",
                     url: "submit.php",
 
-                    data: {"surname": surname, "firstname": firstname, "middlename":middlename, "email": email, "address": address, "matric": matric, "phoneno":phoneno, "dept":dept, "grad":grad, "password":password, "category": category}
+                    data: {"surname": surname, "firstname": firstname, "middlename":middlename, "email": email, "address": address, "matric": matric, "phoneno":phoneno, "dept":dept, "grad":grad, "password":password, "category": category, "emp":emp, "occu":occu, "deg":deg, "d":d, "m":m, "y":y}
 
                    }).done(function( data ) { 
                       var result = $.parseJSON(data); 
@@ -426,159 +484,174 @@ $(document).ready(function(){
 <div >
         <br>
 	
-	<div class="profile">
-            <div style="text-align: center"><img  src="images/Caleb-University logo-550x470.png" height="100" width="100" ></div>
-                    <h3>CALEB UNIVERSITY, Imota, Lagos State, Nigeria.</h3>
-		<div style="text-align: center" class="wrap">
-			<div class="content-main">
-                <div class="w3ls-subscribe w3ls-subscribe1">
-                        <h4>ALUMNI PORTAL</h4>
-                        
-                        <span id="message"></span>
-                        <div><?php echo Message();
-                               echo SuccessMessage();
-                               if (!empty($display)){ ?>
-                            <span id="messager"> <?php echo $display; ?> </span>
-                                <?php    
-                               }
-                            ?></div>
-                        <div><input class="btn1" type="submit" value="CLICK HERE TO REGISTER"></div>
-                        <br>
-                        <div><input class="btnlogin" type="submit" value="CLICK HERE TO LOGIN"></div>
+<div class="profile">
+    <div style="text-align: center"><img  src="images/Caleb-University logo-550x470.png" height="100" width="100" ></div>
+            <h3>CALEB UNIVERSITY, Imota, Lagos State, Nigeria.</h3>
+        <div style="text-align: center" class="wrap">
+                <div class="content-main">
+        <div class="w3ls-subscribe w3ls-subscribe1">
+            <h4>ALUMNI PORTAL</h4>
 
-                        <div class="info">
-                        <h4>Register</h4>
+            <span id="message"></span><span id="messagecc"></span>
+            <div><?php echo Message();
+                   echo SuccessMessage();
+                   if (!empty($display)){ ?>
+                <span id="messager"> <?php echo $display; ?> </span>
+                    <?php    
+                   }
+                ?></div>
+            <div><input class="btn1" type="submit" value="CLICK HERE TO REGISTER"></div>
+            <br>
+            <div><input class="btnlogin" type="submit" value="CLICK HERE TO LOGIN"></div>
+
+            <div class="info">
+            <h4>Register</h4>
 <!--					<p>Please fill all</p>-->
-                        <form action="index.php" method="post">
-                            <input type="text" name="Surname" placeholder="Surname" value="" id="Surname">
-                            <input type="text" name="Firstname" placeholder="First Name" value="" id="Firstname">
-                            <input type="text" name="Middlename" placeholder="Middle Name" value="" id="Middlename">
-                            <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="loader_text"></span>
-                            <input type="text" name="Address" placeholder="Address" value="" id="Address" >
-                            <input type="text" name="phoneno" placeholder="Phone number" value="" id="phoneno" >
-                            <label class="pull-left" style="margin-left: 5%;">Department:</label>
-                            
-                            <select id="dept" style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block" >
-         
-                                <option>Accounting</option>
-                                <option>Architecture</option>
-                                <option>Banking and Finance</option>
-                                <option>Biochemistry</option>
-                                <option>Business Administration</option>
-                                <option>Chemistry</option>
-                                <option>Computer Science</option>
-                                <option>Criminology & Security Studies</option>
-                                <option>Cybersecurity</option>
-                                <option>Economics</option>
-                                <option>English & Literary Studies</option>
-                                <option>Enivironmental Management & Toxicology</option>
-                                <option>Estate Management</option>
-                                <option>Forensic Science</option>
-                                <option>History & Diplomatic Studies</option>
-                                <option>Industrial Chemistry</option>
-                                <option>Information Science</option>
-                                <option>International Relations</option>
-                                <option>Mass Communication</option>
-                                <option>Mathematics</option>
-                                <option>Microbiology & Industrial Biotechnology</option>
-                                <option>Peace Studies & Conflict Resolution</option>
-                                <option>Philosophy</option>
-                                <option>Physics</option>
-                                <option>Physics with Computational Modeling</option>
-                                <option>Physics with Electronics</option>
-                                <option>Plant Sciences & Aquaculture</option>
-                                <option>Political Science</option>
-                                <option>Psychology</option>
-                                <option>Public Administration</option>
-                                <option>Quantity Surveying</option>
-                                <option>Software Engineering</option>
-                                <option>Statistics</option>
-                                <option>Taxation</option>
-                                <option>Zoology & Aquaculture</option>
-                            </select>
-                            <label class="pull-left" style="margin-left: 5%;">Graduation Year :</label>
-                            
-                            <select  id="grad" style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block" >
-                                <?php $year  = 2010; 
-                                            while($year < 2018) 
-                                            {
-                                                $year++
-                                               ?>
-                                  <option><?php echo $year; ?></option>
-                                  <?php } ?>
-                                </select>
-                            <label class="pull-left" style="margin-left: 5%;">Date of Birth :</label>
-                            <br>
-                            <label class="pull-left" style="margin-left: 5%;">Day</label>
-                             <label class="pull-left" style="margin-left: 13%;">Month</label>
-                              <label class="pull-left" style="margin-left: 20%;">Year</label>
-                              <br>
-                            <select  id="d" style="background-color: #000; color: #fff; opacity: 0.8;  width: 15%; margin: 15px;" class="pull-left form-control center-block">
-                                <?php $day  = 0; 
-                                            while($day < 31) 
-                                            {
-                                                $day++
-                                               ?>
-                                  <option><?php echo $day; ?></option>
-                                  <?php } ?>
-                            </select>
-                             <select  id="m" style="background-color: #000; color: #fff; opacity: 0.8;  width: 17%; margin: 15px;" class="pull-left form-control center-block">
-                                <?php $mon  = 0; 
-                                            while($mon < 12) 
-                                            {
-                                                $mon++
-                                               ?>
-                                  <option><?php echo $mon; ?></option>
-                                  <?php } ?>
-                            </select>
-                              <select  id="y" style="background-color: #000; color: #fff; opacity: 0.8;  width: 20%; margin: 15px;" class="pull-left form-control center-block">
-                                <?php $yearr  = 1971; 
-                                            while($yearr < 2018) 
-                                            {
-                                                $yearr++
-                                               ?>
-                                  <option><?php echo $yearr; ?></option>
-                                  <?php } ?>
-                            </select>
+            <form action="index.php" method="post">
+                <input type="text" name="Surname" placeholder="Surname" value="" id="Surname">
+                <input type="text" name="Firstname" placeholder="First Name" value="" id="Firstname">
+                <input type="text" name="Middlename" placeholder="Middle Name" value="" id="Middlename">
+                <input type="email" name="Email"  placeholder="Email" value="" id="Email" ><br><span id="loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="loader_text"></span>
+                <input type="text" name="Address" placeholder="Address" value="" id="Address" >
+                <input type="text" name="phoneno" placeholder="Phone number" value="" id="phoneno" >
+                <label class="pull-left" style="margin-left: 5%;">Department:</label>
+
+                <select id="dept" style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block" >
+
+                    <option>Accounting</option>
+                    <option>Architecture</option>
+                    <option>Banking and Finance</option>
+                    <option>Biochemistry</option>
+                    <option>Business Administration</option>
+                    <option>Chemistry</option>
+                    <option>Computer Science</option>
+                    <option>Criminology & Security Studies</option>
+                    <option>Cybersecurity</option>
+                    <option>Economics</option>
+                    <option>English & Literary Studies</option>
+                    <option>Enivironmental Management & Toxicology</option>
+                    <option>Estate Management</option>
+                    <option>Forensic Science</option>
+                    <option>History & Diplomatic Studies</option>
+                    <option>Industrial Chemistry</option>
+                    <option>Information Science</option>
+                    <option>International Relations</option>
+                    <option>Mass Communication</option>
+                    <option>Mathematics</option>
+                    <option>Microbiology & Industrial Biotechnology</option>
+                    <option>Peace Studies & Conflict Resolution</option>
+                    <option>Philosophy</option>
+                    <option>Physics</option>
+                    <option>Physics with Computational Modeling</option>
+                    <option>Physics with Electronics</option>
+                    <option>Plant Sciences & Aquaculture</option>
+                    <option>Political Science</option>
+                    <option>Psychology</option>
+                    <option>Public Administration</option>
+                    <option>Quantity Surveying</option>
+                    <option>Software Engineering</option>
+                    <option>Statistics</option>
+                    <option>Taxation</option>
+                    <option>Zoology & Aquaculture</option>
+                </select>
+                <label class="pull-left" style="margin-left: 5%;">Degree :</label>
+                <select name="deg" id="deg" style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block"  >
+                    <option>Doctoral</option>
+                    <option>Masters</option>
+                    <option>Bachelors</option>
+                </select>
+                
+                <label class="pull-left" style="margin-left: 5%;">Graduation Year :</label>
+
+                <select  id="grad" style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block" >
+                    <?php $year  = 2010; 
+                                while($year < 2018) 
+                                {
+                                    $year++
+                                   ?>
+                      <option><?php echo $year; ?></option>
+                      <?php } ?>
+                    </select>
+                <label class="pull-left" style="margin-left: 5%;">Date of Birth :</label>
+                <br>
+                <label class="pull-left" style="margin-left: 5%;">Day</label>
+                 <label class="pull-left" style="margin-left: 13%;">Month</label>
+                  <label class="pull-left" style="margin-left: 20%;">Year</label>
+                  <br>
+                <select  id="d" style="background-color: #000; color: #fff; opacity: 0.8;  width: 15%; margin: 15px;" class="pull-left form-control center-block">
+                    <?php $day  = 0; 
+                                while($day < 31) 
+                                {
+                                    $day++
+                                   ?>
+                      <option><?php echo $day; ?></option>
+                      <?php } ?>
+                </select>
+                 <select  id="m" style="background-color: #000; color: #fff; opacity: 0.8;  width: 17%; margin: 15px;" class="pull-left form-control center-block">
+                    <?php $mon  = 0; 
+                                while($mon < 12) 
+                                {
+                                    $mon++
+                                   ?>
+                      <option><?php echo $mon; ?></option>
+                      <?php } ?>
+                </select>
+                  <select  id="y" style="background-color: #000; color: #fff; opacity: 0.8;  width: 20%; margin: 15px;" class="pull-left form-control center-block">
+                    <?php $yearr  = 1971; 
+                                while($yearr < 2018) 
+                                {
+                                    $yearr++
+                                   ?>
+                      <option><?php echo $yearr; ?></option>
+                      <?php } ?>
+                </select>
 
 
 
-                                <input  type="text" name="Matric" id="matric_id" placeholder="Matric No *OPTIONAL*" value="" ><br>
-                                <input class="chk1" type="radio" name="Search" value="Employed" >&nbsp;&nbsp;<span>Employed</span> &nbsp; &nbsp;
-                                <input class="chk2" type="radio" name="Search" value="Employed" ><span>Self Employed</span>&nbsp;&nbsp;
-                                <input class="chk3" type="radio" name="Search" value="Unemployed">&nbsp;&nbsp;<span>Unemployed</span><br><br>
-                                <input type="password" name="password" placeholder="Create Password" value="" id="password">
-                                <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
-                                <br><span id="password_loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="password_text"></span>
-                                <br>
-                                <input class="btn2" type="Submit" name="SubmitReg" value="Sign Up">
-                        </form>
-                        </div>
-                        <div class="infologin">
-                            <h4>Login</h4>
-                            
-                            <form action="index.php" method="post">
+                    <input  type="text" name="Matric" id="matric_id" placeholder="Matric No" value="" >
+                    <br><label class="pull-left" style="margin-left: 5%;">Employment status :</label><br>
+                    <select name="emp" id='emp' style="background-color: #000; color: #fff; opacity: 0.8;  width: 93%; margin: 15px;" class="form-control center-block">
+                        <option>Self Employed</option>
+                        <option>Employed</option>
+                        <option>Unemployed</option>
+                    </select><br>
+                    
+                    <div id='occup'>
+                        <input  type="text" name="occu" id="occu" placeholder="Occupation" value="" >
+                    </div> 
+                    
+                    <input type="password" name="password" placeholder="Create Password" value="" id="password">
+                    <input type="password" name="passordcon" placeholder="Confirm Password" value="" id="passwordcon">
+                    <br><span id="password_loader"><img alt="caleb_alum" src="images/Spinner.gif" width="20" height="20" /></span><span id="password_text"></span>
+                    <br>
+                    <input class="btn2" type="Submit" name="SubmitReg" value="Sign Up">
+            </form>
+            </div>
+            <div class="infologin">
+                <h4>Login</h4>
 
-                                 <input type="text" name="username" placeholder="E-mail" id="Username">                                           
+                <form action="index.php" method="post">
 
-                                 <input type="password" name="password" placeholder="Password" id="Passwordlogin">                                            
+                     <input type="text" name="username" placeholder="E-mail" id="Username">                                           
 
-                            <input type="Submit" name="Submit" value="Login" id="btnlogin2">
+                     <input type="password" name="password" placeholder="Password" id="Passwordlogin">                                            
 
-                        </form>
-                        </div>   
-                                        
-                                        
-                                        
-				</div>
-                       
-			</div>
-			
-			<div class="wthree_footer_copy">
-				<p>© 2018 CALEB UNIVERSITY. All Rights Reserved</p>
-			</div>
-		</div>
-	</div>
+                <input type="Submit" name="Submit" value="Login" id="btnlogin2">
+
+            </form>
+            </div>   
+
+
+
+                    </div>
+
+            </div>
+
+            <div class="wthree_footer_copy">
+                    <p>© 2018 CALEB UNIVERSITY. All Rights Reserved</p>
+            </div>
+        </div>
+</div>
 </div>
 </body>
 </html>

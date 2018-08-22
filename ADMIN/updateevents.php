@@ -2,60 +2,53 @@
 <?php require_once("Sessions.php"); ?>
 <?php require_once("Functions.php"); ?>
 <?php Confirm_Login();?>
-<?php 
+
+ <?php 
     if(isset($_POST["Submit"])){
-$Title=mysqli_real_escape_string($conn,$_POST["Title"]);
-$yeary=mysqli_real_escape_string($conn,$_POST["y"]);
-$monthm=mysqli_real_escape_string($conn,$_POST["m"]);
-$dayd=mysqli_real_escape_string($conn,$_POST["d"]);
-$occuro=mysqli_real_escape_string($conn,$_POST["occur"]);
-date_default_timezone_set("Africa/Lagos");
-$CurrentTime=time();
-$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
-//$DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
-$DateTime;
+                $updateid1 = $_GET['updateid'];
+                $Surname=mysqli_real_escape_string($conn,$_POST["Surname"]);
+                $Firstname=mysqli_real_escape_string($conn,$_POST["Firstname"]);
+                $Middlename=mysqli_real_escape_string($conn,$_POST["Middlename"]);
+                $Email=mysqli_real_escape_string($conn,$_POST["Email"]);
+                $Address=mysqli_real_escape_string($conn,$_POST["Address"]);
+                $Matric=mysqli_real_escape_string($conn,$_POST["Matric"]);
+
+                date_default_timezone_set("Africa/Lagos");
+                $CurrentTime=time();
+                //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+                $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+                $DateTime;
+                $Admin=$_SESSION['User_Username'];
+
+                if(empty($Surname) || empty($Firstname) || empty($Middlename) || empty($Email) || empty($Address) || empty($Matric)){
+                        $_SESSION["ErrorMessage"]="some fields are empty";
+                        redirect("updatealumni.php");
+
+                }elseif(strlen($Email)<2){
+                        $_SESSION["ErrorMessage"]="Title Should be at-least 2 Characters";
+                        redirect("updatealumni.php");
+
+                }else{ 
+                        global $conn;
+
+                        $sql="UPDATE info SET surname = '$Surname' , firstname = '$Firstname' , middlename = '$Middlename', email = '$Email', address = '$Address', matric = '$Matric' WHERE id = '$updateid1' ";
+                        $Execute = mysqli_query($conn,$sql);
+                        if($Execute){
+                        $_SESSION["SuccessMessage"]="Alumni Updated Successfully";
+                        redirect("admindashboard.php");
+                        }else{
+                        $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+                        redirect("admindashboard.php");
+
+                        }
+
+                    }
+                    
+                    //redirect("icons.php");
+
+                }
 
 
-if(empty($Title)){
-	$_SESSION["ErrorMessage"]="Title can't be empty";
-	redirect("calendaradmin.php");
-	
-}elseif(strlen($Title)<2){
-	$_SESSION["ErrorMessage"]="Title Should be at-least 2 Characters";
-	redirect("calendaradmin.php");
-	
-}else{
-    global $conn;
-    $admin=$_SESSION['User_Username'];
-        for($i=1; $i <= $occuro; $i++)
-        { 
-            
-            
-            $eventd = $yeary.'-'.$monthm.'-'.$dayd;
-            $yeary++;
-	$sql="INSERT INTO events(title,date,created,modified,status,madeby,is_created)
-	VALUES('$Title','$eventd','$DateTime','$DateTime','1','$admin','1')";
-	$Execute = mysqli_query($conn,$sql);
-        }
-	if($Execute){
-	$_SESSION["SuccessMessage"]="Event Added Successfully";
-	redirect("calendaradmin.php");
-	}else{
-	$_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
-	redirect("calendaradmin.php");
-	
-        }
-	
-	
-    }	
-	
-}
-
-if(isset($_POST["cal"])){
-
-    redirect("calendar.php");
-	
-}
 
 ?>
 <!DOCTYPE HTML>
@@ -87,13 +80,36 @@ if(isset($_POST["cal"])){
 <!--inner block start here-->
 <div class="inner-block">
     <div class="cols-grids panel-widget">
-    	<h2>Add New Event</h2>
-        <div><?php echo Message();
-                   echo SuccessMessage();
-                ?></div>
-        <div>
-            <form action="calendaradmin.php" method="post">
+    	<h2>Update Alumnus</h2>
+        <div></div>
+        <?php 
+            
+//            $update_record = $_GET['updateid'];   
+            $updateid1 = $_GET['updateid'];
+            global $conn;
+            $sql9="SELECT * FROM info WHERE id='$updateid1'";
+            $Execute1 = mysqli_query($conn,$sql9);
+
+while($DataRows = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){             
+	$Id=$DataRows["id"];
+	$Surname=$DataRows["surname"];
+	$Firstname=$DataRows["firstname"];
+	$Middlename=$DataRows["middlename"];
+	$Email=$DataRows["email"];
+	$Address=$DataRows["address"];
+	$Matric=$DataRows["matric"];
+
+
+}   
+        ?>
+          <div>
+              <form action="updateevents.php?updateid=<?php echo $updateid1; ?>" method="post">
                     <fieldset>
+                    <div class="form-group">
+                    <label for="surname"><span class="FieldInfo">Surname:</span></label>
+                    <input  class="form-control" type="text" name="Surname" id="surname" value="<?php echo $Surname; ?>" placeholder="Surname...">
+                    </div>
+ 
                     <div class="form-group">
                     <label for="title"><span class="FieldInfo">Title:</span></label>
                     <input class="form-control" type="text" name="Title" id="title" placeholder="Title">
@@ -135,52 +151,12 @@ if(isset($_POST["cal"])){
                     <label for="occur"><span class="FieldInfo ">Occurance:</span></label>
                     <input class="form-control" style="width: 51%;" type="number" name="occur" id="occur" placeholder="Occurance">
                     <br>
-            <input class="btn btn-success" type="Submit" name="Submit" value="Add New Event">
-            <input style="margin-left: 1%; margin-top:0%" id="excel" class="btn btn-primary" type="Submit" name="cal" value="View Calendar">
+                    <input class="btn btn-success" type="Submit" name="Submit" value="Update Alumni"> 
+
                     </fieldset>
                     <br>
             </form>
-            <h2>Recent Events</h2>
-            <table class="table table-striped table-hover">
-	<tr>
-	<th>No.</th>
-        <th>Title</th>
-	<th>Date</th>
-	<th>Created By</th>
-	<th>Delete</th>
-	</tr>
-<?php
-$conn;
-$sql="SELECT * FROM events WHERE is_created='1' AND status='1' ORDER BY id desc";
-$Execute = mysqli_query($conn,$sql);
-$SrNo=0;
-while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
-	$eventId=$DataRows['id'];
-	$DateTimeofeve=$DataRows['date'];
-	$title=$DataRows['title'];
-        $madeby = $DataRows['madeby'];        
-	$SrNo++;
-//
-//if(strlen($PersonComment) >15) { $PersonComment = substr($PersonComment, 0, 15).'...';}
-//if(strlen($PersonName) >10) { $PersonName = substr($PersonName, 0, 10).'...';}
-//if(strlen($DateTimeofComment)>12){$DateTimeofComment=substr($DateTimeofComment,0,12).'...';}		
-
-
-?>
-<tr>
-	<td><?php echo htmlentities($SrNo); ?></td>
-	<td><?php echo htmlentities($title); ?></td>
-	<td><?php echo htmlentities($DateTimeofeve); ?></td>
-	<td><?php echo htmlentities($madeby); ?></td>
-                <td><a href="deleteevent.php?id=<?php echo $eventId ?>">
-                <span class="btn btn-danger"><span class="fa fa-minus"></span></span></a></td>
-                
-        
-</tr>
-<?php } ?>			
-			
-			
-		</table>
+           
             </div>
 	 </div>	
         <br>
@@ -230,4 +206,5 @@ $(".sidebar-icon").click(function() {
 </body>
 </html>
 
-              
+  
+           

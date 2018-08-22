@@ -36,52 +36,51 @@
         <div><?php echo Message();
                    echo SuccessMessage();
                 ?></div>
-     <h2>Un-Approved Comments</h2>
+     <h2>Awaiting submission</h2>
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 	<tr>
 	<th>No.</th>
-	<th>Name</th>
+        <th>Added by</th>
+	<th>Matric</th>
 	<th>Date & time</th>
-	<th>Comment</th>
+        <th>Address</th>
+	<th>Type</th>
 	<th>Approve</th>
-	<th>Delete Comment</th>
-        <th>View</th>
-	<th>Added by</th>
 	</tr>
 <?php
 $conn;
-$sql="SELECT * FROM comments WHERE status='OFF' ORDER BY id desc";
+$sql="SELECT * FROM transcriptsreq WHERE category='1' ORDER BY id desc";
 $Execute = mysqli_query($conn,$sql);
 $SrNo=0;
 while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
-	$CommentId=$DataRows['id'];
-	$DateTimeofComment=$DataRows['datetime'];
-	$PersonName=$DataRows['name'];
-	$PersonComment=$DataRows['comments'];
-	$CommentedPostId=$DataRows['admin_panel_id'];
-        $Addedby=$DataRows['addedby'];
+	$TranscriptId=$DataRows['id'];
+	$DateTimeoftrans=$DataRows['datetime'];
+	$Address=$DataRows['address'];
+        $dues = $DataRows['status'];
+	$category=$DataRows['category'];
+	$Addedby=$DataRows['addedby'];
+        $matric = $DataRows['matric'];
+        $type = $DataRows['type'];
 	$SrNo++;
-
-if(strlen($PersonComment) >15) { $PersonComment = substr($PersonComment, 0, 15).'...';}
-if(strlen($PersonName) >10) { $PersonName = substr($PersonName, 0, 10).'...';}
-if(strlen($DateTimeofComment)>12){$DateTimeofComment=substr($DateTimeofComment,0,12).'...';}		
+//
+//if(strlen($PersonComment) >15) { $PersonComment = substr($PersonComment, 0, 15).'...';}
+//if(strlen($PersonName) >10) { $PersonName = substr($PersonName, 0, 10).'...';}
+//if(strlen($DateTimeofComment)>12){$DateTimeofComment=substr($DateTimeofComment,0,12).'...';}		
 
 
 ?>
 <tr>
 	<td><?php echo htmlentities($SrNo); ?></td>
-	<td><?php echo htmlentities($PersonName); ?></td>
-	<td><?php echo htmlentities($DateTimeofComment); ?></td>
-	<td><?php echo htmlentities($PersonComment); ?></td>
-	<td><a href="approve.php?id=<?php echo $CommentId ?>">
+	<td><?php echo htmlentities($Addedby); ?></td>
+	<td><?php echo htmlentities($matric); ?></td>
+	<td><?php echo htmlentities($DateTimeoftrans); ?></td>
+        <td><?php echo htmlentities($Address); ?></td>
+        <td><?php echo htmlentities($type); ?></td>
+	<td><a href="approvetrans.php?id=<?php echo $TranscriptId ?>">
                 <span class="btn btn-success"><span class="fa fa-check"></span></span></a></td>
-                <td><a href="deletecomment.php?id=<?php echo $CommentId ?>">
-                <span class="btn btn-danger"><span class="fa fa-close"></span></span></a></td>
-	<td><a href="fullpost.php?id=<?php echo $CommentedPostId ?>" target="_blank">
-                <span class="btn btn-primary"><span class="fa fa-newspaper-o"></span></span></a></td>
-                <td><?php echo htmlentities($Addedby); ?></td>       
                 
+        
 </tr>
 <?php } ?>			
 			
@@ -89,58 +88,54 @@ if(strlen($DateTimeofComment)>12){$DateTimeofComment=substr($DateTimeofComment,0
 		</table>
 	</div>
      
-	    <h2>Approved Comments</h2>
+	    <h2>Submitted transcripts</h2>
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 	<tr>
 	<th>No.</th>
-	<th>Name</th>
-	<th>Date & Time</th>
-	<th>Comment</th>
-	<!--<th>Approved By</th>-->
-	<th>Revert Approval </th>
-	<th>Delete Comment</th>
-        <th>View</th>
-	<th>Added By</th>
+        <th>Added by</th>
+	<th>Matric</th>
+	<th>Date & time</th>
+        <th>Address</th>
+	<th>Type</th>
+	<th>Revert submission</th>
 	</tr>
 <?php
 $conn;
-$Addedby = null;
-$sql="SELECT * FROM comments WHERE status='ON' ORDER BY id desc";
+$sql="SELECT * FROM transcriptsreq WHERE category='0' ORDER BY id desc";
 $Execute = mysqli_query($conn,$sql);
 $SrNo=0;
 while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
-	$CommentId=$DataRows['id'];
-	$DateTimeofComment=$DataRows['datetime'];
-	$PersonName=$DataRows['name'];
-	$PersonComment=$DataRows['comments'];
-	$CommentedPostId=$DataRows['admin_panel_id'];
-        $Addedby=$DataRows['addedby'];
+	$TranscriptId=$DataRows['id'];
+	$DateTimeoftrans=$DataRows['datetime'];
+	$Address=$DataRows['address'];
+        $dues = $DataRows['status'];
+	$category=$DataRows['category'];
+	$Addedby=$DataRows['addedby'];
+        $matric = $DataRows['matric'];
+        $type = $DataRows['type'];
 	$SrNo++;
-if(strlen($PersonComment) >15) { $PersonComment = substr($PersonComment, 0, 15).'...';}
-if(strlen($PersonName) >10) { $PersonName = substr($PersonName, 0, 10).'...';}
-if(strlen($DateTimeofComment)>12){$DateTimeofComment=substr($DateTimeofComment,0,12).'...';}	
+//
+//if(strlen($PersonComment) >15) { $PersonComment = substr($PersonComment, 0, 15).'...';}
+//if(strlen($PersonName) >10) { $PersonName = substr($PersonName, 0, 10).'...';}
+//if(strlen($DateTimeofComment)>12){$DateTimeofComment=substr($DateTimeofComment,0,12).'...';}		
 
 
 ?>
-
 <tr>
 	<td><?php echo htmlentities($SrNo); ?></td>
-	<td><?php echo htmlentities($PersonName); ?></td>
-	<td><?php echo htmlentities($DateTimeofComment); ?></td>
-	<td><?php echo htmlentities($PersonComment); ?></td>
-	<!--<td><?php // echo htmlentities($ApprovedBy); ?></td>-->
-	<td><a href="disapprove.php?id=<?php echo $CommentId ?>">
-                <span class="btn btn-warning"><span class="fa fa-check"></span></span></a></td>
-                <td><a href="deletecomment.php?id=<?php echo $CommentId ?>">
-                <span class="btn btn-danger"><span class="fa fa-close"></span></span></a></td>
-	<td><a href="fullpost.php?id=<?php echo $CommentedPostId ?>" target="_blank">
-                <span class="btn btn-primary"><span class="fa fa-newspaper-o"></span></span></a></td>
-        <td><?php echo htmlentities($Addedby); ?></td> 
+	<td><?php echo htmlentities($Addedby); ?></td>
+	<td><?php echo htmlentities($matric); ?></td>
+	<td><?php echo htmlentities($DateTimeoftrans); ?></td>
+        <td><?php echo htmlentities($Address); ?></td>
+        <td><?php echo htmlentities($type); ?></td>
+	<td><a href="disapprovetrans.php?id=<?php echo $TranscriptId ?>">
+                <span class="btn btn-danger"><span class="fa fa-minus"></span></span></a></td>
+                
+        
 </tr>
-    <?php }
-    $_SESSION['Commenter'] = $Addedby;
-    ?>		</table>
+<?php } ?>
+                </table>
                 </div>
             
 	 </div>	
