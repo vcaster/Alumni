@@ -4,31 +4,35 @@
 <?php Confirm_Login(); $userid = $_SESSION['User_id']; ?>
 <?php Confirm_User(); ?>
 <?php 
-    if(isset($_POST["pay"])){
-        $payclick = true;    
-    date_default_timezone_set("Africa/Lagos");
-    $CurrentTime=time();
-    //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
-    $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
-    $DateTime;
-    	global $conn;
-	$sql="SELECT * FROM dues WHERE user_id='$userid'";
-        $Execute = mysqli_query($conn,$sql); 
-        
-        while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
-            
-            $status = $DataRows['status'];
-        }
-        
-	
-	if($status != 'PAYED'){
-            
-            $_SESSION["ErrorMessage"]="Pay Dues first";
-	redirect("dues.php");
-	
-	}
-        
-}
+//    if(isset($_POST["pay"])){
+//        $payclick = true;    
+//    date_default_timezone_set("Africa/Lagos");
+//    $CurrentTime=time();
+//    //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+//    $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+//    $DateTime;
+//    	global $conn;
+//	$sql="SELECT * FROM dues WHERE user_id='$userid'";
+//        $Execute = mysqli_query($conn,$sql); 
+//        
+//        while($DataRows=mysqli_fetch_array($Execute,MYSQLI_ASSOC)){
+//            
+//            $status = $DataRows['status'];
+//        }
+//        
+//	
+//	if($status != 'PAYED'){
+//            
+//            $_SESSION["ErrorMessage"]="Pay Dues first";
+//	redirect("dues.php");
+//	
+//	}
+//        else if (empty($status)){
+//            $_SESSION["ErrorMessage"]="Pay Dues first";
+//	redirect("dues.php");
+//        }
+//        
+//}
 
 ?>
 
@@ -43,6 +47,14 @@
                     $("#step2,#step4,#step5").hide();
                     $("#paybtn").click(function (e) {
                         e.preventDefault();
+                         var userid = $('#userid').val();
+                        $.post("verify.php", {userid : userid}, function (results){
+                            
+//                                $('#loader','#loader_text').hide();
+//                                $('#loader_text').html(results);
+                                
+                                  if (results == '0'){
+                            
                         $("#step1").hide(1000, function(){
                             $("#paybtn").hide(1000, function(){
                             $("#step2").show(1000, function(){                            
@@ -126,6 +138,12 @@
                         });
                          });
                     });
+            }
+            else{
+                window.location.href = 'dues.php';
+            }
+           
+                    });
                     });
                                   
 			 var navoffeset=$(".header-main").offset().top;
@@ -176,7 +194,7 @@
                     
                     <div style="padding: 20px;" id="step2">
                 
-                <input id="inter" class="btn btn-success " type="submit" value="INTERNATIONAL" name="inter" />
+                <input  id="inter" class="btn btn-success " type="submit" value="INTERNATIONAL" name="inter" />
                 <input id="loc" class="btn btn-warning " type="submit" value="LOCAL" name="loc" />
 
                 </div>
@@ -191,6 +209,7 @@
 
                 </div>
                 </form>
+                    <input hidden style="margin: 5px;" id="userid"  type="text" name="userid" value="<?php echo $userid; ?>"  />
 		  </div>
             </div>
           

@@ -11,15 +11,27 @@
     
       function Loginuser($Username1,$Password1){
     global $conn;
+    //$Passwordv =    password_hash($Password1,PASSWORD_DEFAULT);
+    
     
     $sql3="SELECT * FROM info
-    WHERE email='$Username1' AND password='$Password1'";
+    WHERE email='$Username1' OR matric = '$Username1'";
+ 
     $Execute3=mysqli_query($conn,$sql3);
     if($user= mysqli_fetch_array($Execute3,MYSQLI_ASSOC)){
+        $uu=$user['password'];
+        $passworddehash = password_verify($Password1,$uu);
+        if($passworddehash == '1'){
+            
 	return $user;
+        }
+        else {
+            redirect("index.php?id=$uu");
+        }
     }else{
 	return null;
     }
+  
     }
     function Logincheck(){
     if(isset($_SESSION["User_id"])){

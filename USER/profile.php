@@ -283,6 +283,11 @@
 					$(".header-main").removeClass("fixed");
 				}
 			 });
+                         
+                         $('button').click(function(){
+                             
+                             $('#pp').toggle('slow');
+                         });
 			 
 		});
 		</script>
@@ -401,8 +406,28 @@ while($DataRows = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
                     <label for="matric"><span class="FieldInfo">Matric:</span></label>
                     <input disabled  class="form-control" type="text" name="Matric" id="matric" value="<?php echo $Matric; ?>" placeholder="Matric No...">
                     </div>
+                    
 
                    <input class="btn btn-primary" type="Submit" name="Submit1" value="Update Profile"> 
+                   
+                   <button id="change" class="btn btn-primary">Change Password</button>
+                   
+                   <div id="pp">
+                       <div class="form-group">
+                    <label for="oldp"><span class="FieldInfo">Old Password:</span></label>
+                    <input  class="form-control" type="password" name="oldp" id="oldp" value="<?php  ?>" placeholder="">
+                    </div>
+                       <div class="form-group">
+                    <label for="newp"><span class="FieldInfo">New Password:</span></label>
+                    <input  class="form-control" type="password" name="newp" id="newp" value="<?php  ?>" placeholder="">
+                    </div>
+                       <div class="form-group">
+                    <label for="newpp"><span class="FieldInfo">Confirm Password:</span></label>
+                    <input  class="form-control" type="password" name="newpp" id="newpp" value="<?php  ?>" placeholder="">
+                    </div>
+                       <input class="btn btn-primary" type="Submit" name="SubmitPP" value="Save Password" onclick="disabled">
+                    </div>
+                   
 
                     </fieldset>
                     <br>

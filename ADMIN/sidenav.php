@@ -33,6 +33,7 @@
                         
                     </i><span>Comments</span></a></li>
                     <li><a href="admins.php"><i class="fa fa-users"></i><span>Manage Admin's</span></a></li>
+                    <li><a href="managealumni.php"><i class="fa fa-user-plus"></i><span>Manage Alumni</span></a></li>
              <li><a href="galleryadmin.php"><i class="fa fa-photo"></i><span>Gallery</span></a></li>
              <li><a href="calendaradmin.php"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
              

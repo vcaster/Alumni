@@ -1,7 +1,7 @@
 <?php require_once('db.php');?>
 <?php require_once("Sessions.php"); ?>
 <?php require_once("Functions.php"); ?>
-<?php Confirm_Login();?>
+<?php //Confirm_Login();?>
 <?php
 
         
@@ -9,10 +9,11 @@
 $Username=mysqli_real_escape_string($conn,$_POST["username"]);
 $Password=mysqli_real_escape_string($conn,$_POST["Password"]);
 $Passwordcon=mysqli_real_escape_string($conn,$_POST["Passwordcon"]);
+$Passwordh=password_hash($Passwordcon, PASSWORD_DEFAULT);
 date_default_timezone_set("Africa/Lagos");
 $CurrentTime=time();
-//$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
-$DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+//$DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
 $DateTime;
 $admincat = 7;
 $Admin=$_SESSION['User_Username'];
@@ -21,7 +22,11 @@ if(empty($Username) || empty($Password) || empty($Passwordcon) ){
 	redirect("admins.php");
 	
 }elseif(strlen($Password) < 5){
-	$_SESSION["ErrorMessage"]="Make a stronger Username/Password";
+	$_SESSION["ErrorMessage"]="Make a stronger Password\. at least five characters";
+	redirect("admins.php");
+}
+elseif(strlen($Username) < 5){
+	$_SESSION["ErrorMessage"]="Make a stronger Username\.";
 	redirect("admins.php");
 }
  elseif($Password != $Passwordcon){
@@ -31,7 +36,7 @@ if(empty($Username) || empty($Password) || empty($Passwordcon) ){
 }else{
 	global $conn;
 	$sql = "INSERT INTO info(email,password,addedby,datetime)
-	VALUES('$Username','$Password','$Admin','$DateTime')";
+	VALUES('$Username','$Passwordh','$Admin','$DateTime')";
 	$Execute = mysqli_query($conn,$sql);
 	if($Execute){
 	$_SESSION["SuccessMessage"]="Admin Added Successfully";
