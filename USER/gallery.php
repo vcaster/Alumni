@@ -153,7 +153,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div id="wrapper">
         <section class="one-third">
             <a class="example-image-link" id='lightbox-img' href="../ADMIN/Uploaded/<?php echo $Image;  ?>" data-lightbox='example-set' data-title='<?php echo $Title;  ?>'>
-                <img style="display: block; max-width: 100%; height: 200px; width: 300px;" class="example-image" src='../ADMIN/Uploaded/<?php echo $Image;  ?>' alt='<?php echo $Title;  ?>' title='<?php echo $Title;  ?>'></a> 
+                <img style="display: block; max-width: 100%; height: 100%; width: 100%;" class="example-image" src='../ADMIN/Uploaded/<?php echo $Image;  ?>' alt='<?php echo $Title;  ?>' title='<?php echo $Title;  ?>'></a> 
         </section>
             
     </div>

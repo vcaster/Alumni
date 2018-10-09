@@ -59,8 +59,10 @@
                             $("#paybtn").hide(1000, function(){
                             $("#step2").show(1000, function(){                            
                                 $("#inter").click(function (r) {
-//                                    alert('hey');
                                     r.preventDefault();
+                                    payWithPaystack();
+//                                    alert('hey');
+                                    $("#submiti").attr("disabled", true);
                                     $("#loc").hide(function () {
                                     $("#step4").show(1000, function(){
 //                                 
@@ -112,8 +114,11 @@
                                  
                             });
                             $("#loc").click(function (u) {
+                                
                                      u.preventDefault();
+                                     payWithPaystack();
                                      $("#inter").hide(function () {
+                                         
                                       $("#step5").show(1000, function(){
                                           $("#submitl").click(function (v) {
                                               
@@ -141,6 +146,7 @@
             }
             else{
                 window.location.href = 'dues.php';
+                alert('Must pay dues first');
             }
            
                     });
@@ -175,7 +181,21 @@
                 ?></div>
         <div id="message"></div>
         <div class="col-md-8">
-                          
+            <?php $paymentdues1 = 21000*100;
+                  $paymentdues = 5000*100;  ?>
+                    <input type="hidden" name="price1" id="price_main1" value="<?php echo $paymentdues1; ?>" />
+                          <input type="hidden" name="tokken" id ="tokken" />
+                    <input type="hidden" name="name" id="name" value="<?php echo $_SESSION['User_Username']; ?>" />
+                    <input type="hidden" name="mobile" id="mobile" value="<?php echo $_SESSION['phoneno']; ?>" />
+                    <input type="hidden" name="email" id="email" value="<?php echo $_SESSION['email']; ?>" />
+                    <input type="hidden" name="username" id="username" value="<?php echo $_SESSION['User_Username']; ?>" />
+                    <input type="hidden" name="price" id="price_main" value="<?php echo $paymentdues1; ?>" />
+                    <input hidden style="margin: 5px;" id="userid"  type="text" name="userid" value="<?php echo $userid; ?>"  />
+
+                    
+<!--                    <p class="text-center text-info">    
+                    <input id="pay" class="btn btn-success agileinfo" onclick="payWithPaystack()" type="submit" value="PAY 5000 NOW" name="pay" />
+                    </p>-->
                 <div class="typo-wells">
                 <div class="wells">
                     <form action="transcript.php" method="POST">
@@ -266,6 +286,59 @@ $(".sidebar-icon").click(function() {
 <!--scrolling js-->
 		<script src="js/jquery.nicescroll.js"></script>
 		<script src="js/scripts.js"></script>
+                <script src="https://js.paystack.co/v1/inline.js"></script>
+                <script type="text/javascript">
+  function payWithPaystack(){
+      var //ref = $("#tokken").val(),
+          name = $('#name').val(),
+          mobile = $('#mobile').val(),
+          email = $('#email').val(),
+          username = $('#username').val(),
+          price = $('#price_main').val(),
+          userid = $('#userid').val();
+  //alert(name+' '+price);
+  
+    
+        var handler = PaystackPop.setup({
+      key: 'pk_test_213968876e504230bc3a5a9ff93f68fe3a7565ab',
+      email: email,
+      amount: price,
+      metadata: {
+         custom_fields: [
+            {
+               // display_name: "Mobile Number",
+                display_name: "Mobile Number",
+                variable_name: "mobile_number",
+                value: mobile
+            }
+         ]
+      },
+      callback: function(response){
+          //save transaction refrence to database
+          //alert('transaction was successful. transaction ref is ' + response.reference);
+          //alert('step reached');
+          var message = "success. transaction ref is " + response.reference,
+                  dataString1 = 'name=' + name + '&email=' + email + '&username=' + username + '&mobile=' + mobile + '&message=' + message + '&refernce=' + response.reference + '&amount=' + price; 
+                    $.ajax({    //grab the trans no
+                          type: "POST",
+                          url: "transverify.php",             
+                          data: dataString1,   //expect html to be returned                
+                          success: function(response){                    
+                            alert(response);
+                            $("#submiti").attr("disabled", false);
+                             //alert(response);
+                           //  window.location.reload();
+                          }
+                      });  
+      },
+      onClose: function(){
+          //alert('window closed');
+      }
+    });
+    handler.openIframe();
+  }
+  
+        </script>
 		<!--//scrolling js-->
 <script src="js/bootstrap.js"> </script>
 <!-- mother grid end here-->

@@ -31,12 +31,11 @@
  <?php 
     if(isset($_POST["Submit1"])){
                 
-                $Surname=mysqli_real_escape_string($conn,$_POST["Surname"]);
-                $Firstname=mysqli_real_escape_string($conn,$_POST["Firstname"]);
-                $Middlename=mysqli_real_escape_string($conn,$_POST["Middlename"]);
+                
                 $Email=mysqli_real_escape_string($conn,$_POST["Email"]);
                 $Address=mysqli_real_escape_string($conn,$_POST["Address"]);
-                $Matric=mysqli_real_escape_string($conn,$_POST["Matric"]);
+                $Phoneno=mysqli_real_escape_string($conn,$_POST["Phoneno"]);
+
 
                 date_default_timezone_set("Africa/Lagos");
                 $CurrentTime=time();
@@ -45,24 +44,85 @@
                 $DateTime;
                 $Admin=$_SESSION['User_Username'];
 
-                if(empty($Surname) || empty($Firstname) || empty($Middlename) || empty($Email) || empty($Address) || empty($Matric)){
-                        $_SESSION["ErrorMessage"]="some fields are empty";
+                if(empty($Email) || empty($Address) || empty($Phoneno)){
+                        $_SESSION["ErrorMessage"]="Some fields are empty";
                         redirect("profile.php");
 
-                }elseif(strlen($Email)<2){
-                        $_SESSION["ErrorMessage"]="Title Should be at-least 2 Characters";
+                }elseif(strlen($Email)<5){
+                        $_SESSION["ErrorMessage"]="Email Should be at-least 5 Characters";
                         redirect("profile.php");
 
                 }else{ 
                         global $conn;
 
-                        $sql="UPDATE info SET surname = '$Surname' , firstname = '$Firstname' , middlename = '$Middlename', email = '$Email', address = '$Address', matric = '$Matric' WHERE id = '$userid' ";
+                        $sql="UPDATE info SET email = '$Email', address = '$Address', phoneno = '$Phoneno' WHERE id = '$userid' ";
                         $Execute = mysqli_query($conn,$sql);
                         if($Execute){
                         $_SESSION["SuccessMessage"]="Alumni Updated Successfully";
                         redirect("profile.php");
                         }else{
                         $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again !";
+                        redirect("profile.php");
+
+                        }
+
+                    }
+                    
+                    //redirect("icons.php");
+
+                }
+                if(isset($_POST["SubmitPP"])){
+                
+                $oldp=mysqli_real_escape_string($conn,$_POST["oldp"]);
+                $newp=mysqli_real_escape_string($conn,$_POST["newp"]);
+                $newpp=mysqli_real_escape_string($conn,$_POST["newpp"]);
+
+                date_default_timezone_set("Africa/Lagos");
+                $CurrentTime=time();
+                //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
+                $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
+                $DateTime;
+                $Admin=$_SESSION['User_Username'];
+                
+                $sql5=$conn->query("SELECT password FROM info WHERE id ='$userid'");
+        
+            
+                while($DataRows = $sql5->fetch_array()){
+                    $pass = $DataRows['password'];                    
+                }
+                
+
+                if(empty($oldp) || empty($newp) || empty($newpp)){
+                        $_SESSION["ErrorMessage"]="Field can't be left empty";
+                        redirect("profile.php");
+
+                }
+                elseif(!password_verify($oldp, $pass ) == '1'){
+//                        $q=password_verify($oldp, $pass );
+//                        var_dump();
+                        $_SESSION["ErrorMessage"]="Old password wrong ";
+                        redirect("profile.php");
+
+                }elseif($newp != $newpp){
+                        $_SESSION["ErrorMessage"]="Passwords don't match";
+                        redirect("profile.php");
+
+                }
+                elseif(strlen($newp) < 6){
+                        $_SESSION["ErrorMessage"]="Password must be at least 6 characters";
+                        redirect("profile.php");
+
+                }else{ 
+                        global $conn;
+                        $in =     password_hash($newp, PASSWORD_DEFAULT);
+
+                        $sql="UPDATE info SET password = '$in' WHERE id = '$userid' ";
+                        $Execute = mysqli_query($conn,$sql);
+                        if($Execute){
+                        $_SESSION["SuccessMessage"]="Password Updated Successfully";
+                        redirect("profile.php");
+                        }else{
+                        $_SESSION["ErrorMessage"]="Something Went {$in}Wrong. Try Again !";
                         redirect("profile.php");
 
                         }
@@ -88,15 +148,15 @@
 		<div class="header-main">
             <div class="header-left">
                     <div class="logo-name">
-                             <a href="admindashboard.php"> <h1>ADMIN</h1> 
+<!--                             <a href="admindashboard.php"> <h1>ADMIN</h1> 
                                  
-                              </a> 								
+                              </a> 								-->
                     </div>
                     <!--search-box-->
                             <div class="search-box">
                                 <form action="blogger.php" method="GET">
                                         <input type="text" placeholder="Search..." name="Searchbox" required="">	
-                                            <input type="submit" name="Search">					
+                                            <input type="submit" name="Search" value="">					
                                     </form>
                             </div><!--//end-search-box-->
                     <div class="clearfix"> </div>
@@ -274,6 +334,7 @@
 <!-- script-for sticky-nav -->
 		<script>
 		$(document).ready(function() {
+//                    $('#pp').hide('slow');
 			 var navoffeset=$(".header-main").offset().top;
 			 $(window).scroll(function(){
 				var scrollpos=$(window).scrollTop(); 
@@ -283,11 +344,11 @@
 					$(".header-main").removeClass("fixed");
 				}
 			 });
-                         
-                         $('button').click(function(){
-                             
-                             $('#pp').toggle('slow');
-                         });
+//                         
+//                         $('button').click(function(){
+//                             
+//                             $('#pp').toggle('slow');
+//                         });
 			 
 		});
 		</script>
@@ -375,6 +436,7 @@ while($DataRows = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
 	$Email=$DataRows["email"];
 	$Address=$DataRows["address"];
 	$Matric=$DataRows["matric"];
+        $Phoneno=$DataRows["phoneno"];
 
 
 }   
@@ -403,15 +465,16 @@ while($DataRows = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
                     <input  class="form-control" type="text" name="Address" id="address" value="<?php echo $Address; ?>" placeholder="Adresss...">
                     </div>
                         <div class="form-group">
+                    <label for="phoneno"><span class="FieldInfo">Mobile Number:</span></label>
+                    <input  class="form-control" type="text" name="Phoneno" id="Phoneno" value="<?php echo $Phoneno; ?>" placeholder="Adresss...">
+                    </div>
+                        <div class="form-group">
                     <label for="matric"><span class="FieldInfo">Matric:</span></label>
                     <input disabled  class="form-control" type="text" name="Matric" id="matric" value="<?php echo $Matric; ?>" placeholder="Matric No...">
                     </div>
                     
 
                    <input class="btn btn-primary" type="Submit" name="Submit1" value="Update Profile"> 
-                   
-                   <button id="change" class="btn btn-primary">Change Password</button>
-                   
                    <div id="pp">
                        <div class="form-group">
                     <label for="oldp"><span class="FieldInfo">Old Password:</span></label>
@@ -426,13 +489,14 @@ while($DataRows = mysqli_fetch_array($Execute1,MYSQLI_ASSOC)){
                     <input  class="form-control" type="password" name="newpp" id="newpp" value="<?php  ?>" placeholder="">
                     </div>
                        <input class="btn btn-primary" type="Submit" name="SubmitPP" value="Save Password" onclick="disabled">
-                    </div>
+                    </div>        
                    
-
-                    </fieldset>
+                   </fieldset>
                     <br>
             </form>
-                        
+                <!--<button id="change" class="btn btn-primary">Change Password</button>-->
+                   
+                   
              </div>
 	 </div>	
         <br>

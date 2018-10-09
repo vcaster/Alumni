@@ -9,7 +9,7 @@
                             <div class="search-box">
                                     <form>
                                         <input type="text" placeholder="Search..." name="Searchbox" required="">	
-                                            <input type="submit" name="Search">					
+                                        <input type="submit" name="Search" value="">					
                                     </form>
                             </div><!--//end-search-box-->
                     <div class="clearfix"> </div>

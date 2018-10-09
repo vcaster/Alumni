@@ -7,6 +7,8 @@ ini_set('max_execution_time', 300);
      $dd = '$2y$10$wYGpfKKW1/qek';
      $in =     password_hash($input, PASSWORD_DEFAULT);
     // echo $in;
-    echo password_verify($input, '$2y$10$hHzVMFiVzuHYRitHdTg1UusCQf0yJedNlj8fnsEafYd3ZLzsD2mjO');
+    //echo password_verify($input, '$2y$10$hHzVMFiVzuHYRitHdTg1UusCQf0yJedNlj8fnsEafYd3ZLzsD2mjO');
+    echo $in. 'division';
+    echo md5('hell');
           
 ?>

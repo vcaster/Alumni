@@ -1,10 +1,8 @@
-<?php include('Sessions.php'); ?>
-<?php include('Functions.php'); ?>
 <?php
 
-    $_SESSION['User_id'] = null;
-    
+    $_SESSION['username'] = null;
+
     session_destroy();
-    
-    redirect('../index.php');
+
+    header("Location: index.php");
 ?>

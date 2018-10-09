@@ -38,6 +38,14 @@ elseif(strlen($Username) < 5){
 	$sql = "INSERT INTO info(email,password,addedby,datetime)
 	VALUES('$Username','$Passwordh','$Admin','$DateTime')";
 	$Execute = mysqli_query($conn,$sql);
+        /*
+          $Name = test_for_data($_POST["Name"]);
+    if (!preg_match("/[a-zA-Z\.]+$/",$Name))
+    {
+        $NameError = "only letters please";
+    }
+         */
+        
 	if($Execute){
 	$_SESSION["SuccessMessage"]="Admin Added Successfully";
 	redirect("admins.php");

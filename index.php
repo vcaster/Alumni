@@ -30,7 +30,7 @@ if($Total == 0){
         echo "1 visit";
     }
     else{
-        echo 'failed';
+        echo 'faileddddddddddddddddddddddddddddddddddddddddd';
     }
 }
 
@@ -71,9 +71,9 @@ else{
             
             
             if($seenuser){
-                $_SESSION['User_Timelog'] = $seenauser['datetime'];
-                $_SESSION['User_image'] = $seenauser['dp'];
-                $_SESSION['User_bio'] = $seenauser['bio'];
+                $_SESSION['User_Timelog'] = $seenuser['datetime'];
+                $_SESSION['User_image'] = $seenuser['dp'];
+                $_SESSION['User_bio'] = $seenuser['bio'];
                 $_SESSION['User_Cat'] = $seenuser['category'];
                 $_SESSION['User_id'] = $seenuser['id'];
                 $_SESSION['matric'] = $seenuser['matric'];
@@ -489,8 +489,8 @@ $(document).ready(function(){
         <br>
 	
 <div class="profile">
-    <div style="text-align: center"><img  src="images/Caleb-University logo-550x470.png" height="100" width="100" ></div>
-            <h3>CALEB UNIVERSITY, Imota, Lagos State, Nigeria.</h3>
+    <div style="text-align: center"><img class="img-circle img-responsive center-block"   src="images/caleb.jpg" height="100" width="100" alt="Caleb University Alumni Network" ></div>
+    <br> <h3>CALEB UNIVERSITY ALUMNI NETWORK.</h3>
         <div style="text-align: center" class="wrap">
                 <div class="content-main">
         <div class="w3ls-subscribe w3ls-subscribe1">

@@ -158,7 +158,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <div class="search-box">
                                 <form action="admindashboard.php" method="GET">   
                                         <input type="text" placeholder="Search..." name="Searchbox" required="">	
-                                            <input type="submit" name="Search" id="Searchbb">					
+                                        <input type="submit" name="Search" id="Searchbb" value="">					
                                     </form>
                             </div><!--//end-search-box-->
                     <div class="clearfix"> </div>
@@ -453,8 +453,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<th>Firstname</th>
 			<th>Middlename</th>
 			<th>E-mail</th>
-			<th>Matric</th>
                         <th>Address</th>
+                        <th>Matric</th>
 			<th>Phone no</th>
                         <th>Department</th>
                         <th>Graduation year</th>

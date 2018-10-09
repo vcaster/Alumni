@@ -1,37 +1,9 @@
-<?php require_once('db.php');?>
-<?php require_once("Sessions.php"); ?>
-<?php require_once("Functions.php"); ?>
-<?php Confirm_Login(); $userid = $_SESSION['User_id']; ?>
-<?php Confirm_User(); ?>
-<?php 
-//    if(isset($_POST["pay"])){
-//    
-//    date_default_timezone_set("Africa/Lagos");
-//    $CurrentTime=time();
-//    //$DateTime=strftime("%Y-%m-%d %H:%M:%S",$CurrentTime);
-//    $DateTime=strftime("%B-%d-%Y %H:%M:%S",$CurrentTime);
-//    $DateTime;
-//    //$admin = $_SESSION['User_Username'];
-//    
-//   global $conn;
-//	$sql="UPDATE dues SET datetime = '$DateTime',status = 'PAYED' WHERE user_id='$userid'";
-//	$Execute = mysqli_query($conn,$sql);
-//	if($Execute){
-//	$_SESSION["SuccessMessage"]="Payed Successfully";
-//	redirect("dues.php");
-//	}else{
-//	$_SESSION["ErrorMessage"]="failed to pay";
-//	redirect("dues.php");
-//		
-//	}
-//	
-//    }	
-	
 
-?>
 <!DOCTYPE HTML>
 <html>
-<?php include("head.php") ?>
+    <head>
+        <title>Neon studio secure payment</title>
+        </head>
 <body>	
 <div class="page-container">	
    <div class="left-content">

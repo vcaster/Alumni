@@ -1,7 +1,8 @@
+<?php require_once('../db.php');?>
 <?php
     if(isset($_POST['getData'])){
-        $database = "alumni_cms";
-        $conn= mysqli_connect('localhost', 'root', '',$database);
+//        $database = "alumni_cms";
+//        $conn= mysqli_connect('localhost', 'root', '',$database);
        
         $start = $conn->real_escape_string($_POST['start']);
         $limit = $conn->real_escape_string($_POST['limit']);

@@ -356,7 +356,7 @@ span.logo-clr{
     width: 20px;
     height: 20px;
     display: inline-block;
-   vertical-align: text-top;
+    vertical-align: text-top;
     border: none;
     outline: none;
 }
@@ -3856,6 +3856,15 @@ span.malorum-pro {
 }
 }
 @media (max-width:768px){
+.page-container.sidebar-collapsed-back .sidebar-menu #logo {
+    display: none;
+}
+.page-container.sidebar-collapsed .sidebar-menu #logo {
+    display: none;
+}
+#logo {
+    display: none;
+}
 .page-container {
 	min-width:650px;
 	position: relative;
@@ -3945,6 +3954,15 @@ span.malorum-pro {
 
 }			
 @media (max-width:736px){
+.page-container.sidebar-collapsed-back .sidebar-menu #logo {
+    display: none;
+}
+.page-container.sidebar-collapsed .sidebar-menu #logo {
+    display: none;
+}
+#logo {
+    display: none;
+}   
 .malorm-bottom p {
     font-size: 0.7em;
 }	
@@ -3956,6 +3974,15 @@ canvas#pie {
 }
 }
 @media (max-width:667px){
+    .page-container.sidebar-collapsed-back .sidebar-menu #logo {
+    display: none;
+}
+.page-container.sidebar-collapsed .sidebar-menu #logo {
+    display: none;
+}
+#logo {
+    display: none;
+}
 li.dropdown.head-dpdn a.dropdown-toggle {
     margin: 1em 0.9em;
 }
@@ -3983,6 +4010,15 @@ canvas#pie {
 }
 }
 @media (max-width:640px){
+    .page-container.sidebar-collapsed-back .sidebar-menu #logo {
+    display: none;
+}
+.page-container.sidebar-collapsed .sidebar-menu #logo {
+    display: none;
+}
+#logo {
+    display: none;
+}
 .header-left {
     float: none;
     width: 100%;
